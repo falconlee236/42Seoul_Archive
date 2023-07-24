@@ -16,6 +16,16 @@
 #include "./libft/get_next_line.h"
 #include <stdio.h>
 
+# define X_EVENT_KEY_PRESS			2
+# define X_EVENT_KEY_RELEASE		3
+
+# define KEY_ESC		53
+# define KEY_W			13
+# define KEY_A			0
+# define KEY_S			1
+# define KEY_D			2
+
+
 char	**make_map(char *filename, int row_len)
 {
     char	*line;
@@ -40,6 +50,20 @@ char	**make_map(char *filename, int row_len)
     map[i] = 0;
     close(fd);
     return (map);
+}
+
+void (int keycode, int *x, int *y)
+{
+    int next_x = *x, next_y = *y;
+    if (keycode == KEY_W)
+        next_x--;
+    else if (keycode == KEY_A)
+        next_y--;
+    else if (keycode == KEY_S)
+        next_x++;
+    else if (keycode == KEY_S)
+        next_y++;
+    if (next_x < 0 || next_x >= )
 }
 
 int	main(int ac, char **av)
@@ -91,6 +115,8 @@ int	main(int ac, char **av)
         }
         i++;
     }
+    int x = 4, y = 1;
+
 
     //이제 해야할 것.
     /*
