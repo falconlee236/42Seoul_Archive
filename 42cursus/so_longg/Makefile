@@ -2,7 +2,6 @@ NAME=so_long
 CFLAGS=cc -Wall -Wextra -Werror -o
 
 SRCS=so_long.c\
-	is_vaildmap.c\
 	so_long_util.c\
 	is_vaildpath.c
 
@@ -11,7 +10,7 @@ all: $(NAME)
 $(NAME):
 	@$(MAKE) -C mlx all
 	@$(MAKE) -C libft all
-	$(CFLAGS) $(NAME) $(SRCS) -L ./mlx -lmlx -framework OpenGL -framework Appkit -L ./libft -lft
+	$(CFLAGS) $(NAME) $(SRCS) -L ./mlx -lmlx -framework OpenGL -framework Appkit -L ./libft -lft -g
 
 clean:
 	@$(MAKE) -C mlx clean
