@@ -52,18 +52,18 @@ char	**make_map(char *filename, int row_len)
     return (map);
 }
 
-void (int keycode, int *x, int *y)
+int key_event(int keycode, t_point* pt)
 {
-    int next_x = *x, next_y = *y;
     if (keycode == KEY_W)
-        next_x--;
+        pt->x--;
     else if (keycode == KEY_A)
-        next_y--;
+        pt->y--;
     else if (keycode == KEY_S)
-        next_x++;
-    else if (keycode == KEY_S)
-        next_y++;
-    if (next_x < 0 || next_x >= )
+        pt->x++;
+    else if (keycode == KEY_D)
+        pt->y++;
+    printf("%d %d\n", pt->x, pt->y);
+    return (0);
 }
 
 int	main(int ac, char **av)
@@ -75,7 +75,7 @@ int	main(int ac, char **av)
 		ft_printf("Argument Error\n");
 		return (0);
 	}
-    int row = 6, col = 34;
+    int row = 5, col = 13;
     char **map = make_map(av[1], row);
     for(int i = 0; i < row; i++){
         for(int j = 0; j < col; j++)
@@ -83,7 +83,8 @@ int	main(int ac, char **av)
         printf("\n");
     }
     int win_height = 900, win_width = 1800;
-    int img_width = 48, img_height = 48;
+//    int img_width = win_width / col, img_height = (win_height - 300) / row;
+    int img_width = 100, img_height = 100;
 	mlx_ptr = mlx_init();
 // 가로 50cm 세로 25cm 기준 50 -> 1889pixel, 944 pixel 그러면 우리는 화면 크기를 1800 * 900으로 하고 비율을 조정해야할듯
 	win_ptr = mlx_new_window(mlx_ptr, win_width, win_height, "mlx 42");
@@ -100,7 +101,7 @@ int	main(int ac, char **av)
         int j = 0;
         while (j < col)
         {
-            mlx_put_image_to_window(mlx_ptr, win_ptr, back, j * img_height, i * img_width);
+            mlx_put_image_to_window(mlx_ptr, win_ptr, back, j * img_height + 100, i * img_width + 100);
             if (map[i][j] == 'E')
                 mlx_put_image_to_window(mlx_ptr, win_ptr, exit, j * img_height, i * img_width);
             else if (map[i][j] == 'X')
@@ -115,8 +116,9 @@ int	main(int ac, char **av)
         }
         i++;
     }
-    int x = 4, y = 1;
-
+    t_point pt;
+    pt = (t_point){.x = 4, .y = 1};
+    mlx_hook(win_ptr, X_EVENT_KEY_PRESS, 0, &key_event, &pt);
 
     //이제 해야할 것.
     /*
