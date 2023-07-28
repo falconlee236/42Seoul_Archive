@@ -6,7 +6,7 @@
 /*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 15:01:59 by sangylee          #+#    #+#             */
-/*   Updated: 2023/07/21 21:51:43 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/07/28 16:27:43 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,52 +40,57 @@ t_point	next_pos(t_point cur, int num)
 	return (next);
 }
 
-void	dfs(char **map, t_ppoint p, t_point point)
+void	dfs(char **map, int **visit, t_dfs_info *d_info, t_point point)
 {
 	int			i;
-	t_ppoint	nt;
+	t_point		next;
 
 	i = 0;
-	nt.end = p.end;
-	ft_printf("%d %d\n", p.start.x, p.start.y);
-	if (p.start.x == p.end.x && p.start.y == p.end.y)
-	{
-		map[0][0] = '!';
-		return ;
-	}
+	visit[point.x][point.y] = 1;
+	if (map[point.x][point.y] == 'C')
+		d_info->collect_cnt++;
 	while (i < 4)
 	{
-		nt.start = next_pos(p.start, i++);
-		if (nt.start.x < 0 || nt.start.x >= point.x || nt.start.y < 0
-			|| nt.start.y >= point.y)
+		next = next_pos(point, i++);
+		if (next.x < 0 || next.x >= d_info->size.x
+			|| next.y < 0 || next.y >= d_info->size.y)
 			continue ;
-		if (!(map[nt.start.x][nt.start.y] == '1'
-			|| map[nt.start.x][nt.start.y] == '*'))
+		if (map[next.x][next.y] != '1' && visit[next.x][next.y] != 1)
 		{
-			map[nt.start.x][nt.start.y] = 1;
-			dfs(map, nt, point);
-			map[nt.start.x][nt.start.y] = 0;
+			if (map[next.x][next.y] == 'E')
+				d_info->exit_cnt += 1;
+			else
+				dfs(map, visit, d_info, next);
 		}
 	}
 }
 
-int	check_path(char **map)
+int	check_path(t_dfs_info dfs_info, t_info *info, int **visit)
 {
-	if (map[0][0] == '!')
+	int	i;
+
+	i = 0;
+	if (info->collect_cnt == dfs_info.collect_cnt
+		&& dfs_info.exit_cnt >= 1)
 	{
-		map[0][0] = '1';
+		while (i < info->map_size.x)
+			free(visit[i++]);
+		free(visit);
 		return (1);
 	}
 	return (0);
 }
 
-int	is_vaildpath(char **map, t_point point)
+int	is_vaildpath(char **map, int **visit, t_point point, t_info *info)
 {
-	t_ppoint	start_end;
+	t_dfs_info	dfs_info;
 	int			j;
 	int			row;
 
 	row = point.x;
+	dfs_info.collect_cnt = 0;
+	dfs_info.exit_cnt = 0;
+	dfs_info.size = point;
 	while (--row)
 	{
 		j = -1;
@@ -93,16 +98,11 @@ int	is_vaildpath(char **map, t_point point)
 		{
 			if (map[row][j] == 'P')
 			{
-				start_end.start.x = row;
-				start_end.start.y = j;
-			}
-			else if (map[row][j] == 'E')
-			{
-				start_end.end.x = row;
-				start_end.end.y = j;
+				dfs_info.start.x = row;
+				dfs_info.start.y = j;
 			}
 		}
 	}
-	dfs(map, start_end, point);
-	return (check_path(map));
+	dfs(map, visit, &dfs_info, dfs_info.start);
+	return (check_path(dfs_info, info, visit));
 }

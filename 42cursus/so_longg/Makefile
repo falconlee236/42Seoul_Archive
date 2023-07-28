@@ -2,8 +2,12 @@ NAME=so_long
 CFLAGS=cc -Wall -Wextra -Werror -o
 
 SRCS=so_long.c\
-	so_long_util.c\
-	is_vaildpath.c
+	is_vaildmap.c\
+	is_vaildpath.c\
+	is_vaildutil.c\
+	make_enemy.c\
+	so_longutil.c\
+	hook_event.c\
 
 all: $(NAME)
 

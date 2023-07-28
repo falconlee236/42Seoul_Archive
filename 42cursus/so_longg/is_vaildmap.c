@@ -6,17 +6,15 @@
 /*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 13:57:28 by sangylee          #+#    #+#             */
-/*   Updated: 2023/07/21 21:55:02 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/07/28 19:28:28 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 #include "./libft/get_next_line.h"
-#include "./libft/ft_printf.h"
 
 static char	**make_map(char *filename, int row_len)
 {
-	char	*line;
 	int		fd;
 	int		i;
 	char	**map;
@@ -26,13 +24,12 @@ static char	**make_map(char *filename, int row_len)
 	i = 0;
 	if (fd < 0)
 		return (0);
-	if (!map || !(*map))
+	if (!map)
 	{
 		free_arr(map);
 		return (0);
 	}
-	line = get_next_line(fd);
-	map[i++] = line;
+	map[i++] = get_next_line(fd);
 	while (i < row_len)
 		map[i++] = get_next_line(fd);
 	map[i] = 0;
@@ -55,12 +52,13 @@ static int	is_rectangle(char *filename)
 	row_len = 0;
 	while (line)
 	{
-		if (col_len != ft_strlen_without_newline(line))
-		{
-			ft_printf("asdfasdf\n");
-			return (0);
-		}
+		free(line);
 		line = get_next_line(fd);
+		if (line && col_len != ft_strlen_without_newline(line))
+		{
+			free(line);
+			return (close(fd));
+		}
 		row_len++;
 	}
 	close(fd);
@@ -88,66 +86,62 @@ static int	is_surround(char **map, int row, int col)
 		i++;
 	}
 	if (!flag)
-	{
-		free_arr(map);
 		return (0);
-	}
 	return (1);
 }
 
-static int	is_config(char **map, int row, int col)
+static int	is_config(char **map, int row, int col, t_info *info)
 {
-	int	exit;
-	int	collect;
-	int	start_pos;
+	int	exit_num;
+	int	start_num;
+	int	i;
 	int	j;
 
-	exit = 0;
-	collect = 0;
-	start_pos = 0;
-	while (--row)
+	exit_num = 0;
+	start_num = 0;
+	i = -1;
+	while (++i < row)
 	{
-		j = 0;
-		while (j < col)
+		j = -1;
+		while (++j < col)
 		{
-			if (map[row][j] == 'C')
-				collect++;
-			else if (map[row][j] == 'E')
-				exit++;
-			else if (map[row][j] == 'P')
-				start_pos++;
-			j++;
+			if (map[i][j] == 'C')
+				info->collect_cnt++;
+			else if (map[i][j] == 'E')
+				exit_num++;
+			else if (map[i][j] == 'P')
+				start_num++;
 		}
 	}
-	if (collect < 1 || exit != 1 || start_pos != 1)
+	if (info->collect_cnt < 1 || exit_num != 1 || start_num != 1)
 		return (0);
 	return (1);
 }
 
-int	is_vaildmap(char *filename)
+int	is_vaildmap(char *filename, t_info *info)
 {
-	t_point	point;
-	char	**map;
 	int		**visit;
+	char	*substr;
 
-	if (ft_strlen(filename) < 5
-		|| ft_strncmp(
-			ft_substr(filename, ft_strlen(filename) - 4, 4), ".ber", 4))
+	substr = ft_substr(filename, ft_strlen(filename) - 4, 4);
+	if (ft_strlen(filename) < 5 || ft_strncmp(substr, ".ber", 4))
+		return (free_return(substr));
+	info->map_size.x = is_rectangle(filename);
+	if (info->map_size.x == 0)
 		return (0);
-	ft_printf("1111\n");
-	point.x = is_rectangle(filename);
-	if (point.x == 0)
-		return (0);
-	ft_printf("222\n");
-	map = make_map(filename, point.x);
-	point.y = ft_strlen(map[0]) - 1;
-	if (!map || !is_surround(map, point.x, point.y))
-		return (0);
-	ft_printf("333\n");
-	if (!is_config(map, point.x, point.y) || !is_vaildpath(map, point))
+	info->map = make_map(filename, info->map_size.x);
+	info->map_size.y = ft_strlen_without_newline(info->map[0]);
+	visit = make_visit_arr(info->map_size.x, info->map_size.y);
+	if (!visit
+		|| !is_config(info->map, info->map_size.x, info->map_size.y, info)
+		|| !is_surround(info->map, info->map_size.x, info->map_size.y)
+		|| !is_vaildpath(info->map, visit, info->map_size, info))
 	{
-		free_arr(map);
-		return (0);
+		free_arr(info->map);
+		free(info->mlx);
+		free(info->win);
+		return (free_return(substr));
 	}
+	free(substr);
 	return (1);
 }
