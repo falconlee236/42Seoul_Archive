@@ -31,5 +31,6 @@ int	main(int ac, char **av)
 	mlx_hook(info.win, X_EVENT_KEY_PRESS, 0, &key_hook_event, &info);
 	mlx_hook(info.win, ON_DESTROY, 0, &destory_hook_event, &info);
 	// mlx_loop_hook(info.mlx, )
+
 	mlx_loop(info.mlx);
 }
