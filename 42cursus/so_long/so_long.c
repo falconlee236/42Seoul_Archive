@@ -32,11 +32,6 @@ int	main(int ac, char **av)
 	make_enemy(info.map, info.map_size.x, info.map_size.y, &info);
 	mlx_hook(info.win, X_EVENT_KEY_PRESS, 0, &key_hook_event, &info);
 	mlx_hook(info.win, ON_DESTROY, 0, &destory_hook_event, &info);
-<<<<<<< HEAD:42cursus/so_long/so_long.c
 	mlx_loop_hook(info.mlx, &loop_hook_event, &info);
-=======
-	// mlx_loop_hook(info.mlx, )
-
->>>>>>> 76de1ea514acb367c6bec1463b19c2d5592319ec:42cursus/so_longg/so_long.c
 	mlx_loop(info.mlx);
 }
