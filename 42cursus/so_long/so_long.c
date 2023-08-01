@@ -16,6 +16,7 @@
 void	leak_check(void)
 {
 	system("leaks so_long");
+    return ;
 }
 
 int	main(int ac, char **av)
