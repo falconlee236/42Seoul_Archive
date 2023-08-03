@@ -28,6 +28,7 @@ int	main(int ac, char **av)
 		return (write(2, "Error\n init", 10));
 	if (ac != 2 || !is_vaildmap(av[1], &info))
 	{
+        mlx_destroy_window(info.mlx, info.win);
 		return (write(2, "Error\n Argument", 15));
 	}
 	make_enemy(info.map, info.map_size.x, info.map_size.y, &info);
