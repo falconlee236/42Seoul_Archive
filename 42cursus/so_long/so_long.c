@@ -27,10 +27,7 @@ int	main(int ac, char **av)
 	if (!info_init(&info))
 		return (write(2, "Error\n init", 10));
 	if (ac != 2 || !is_vaildmap(av[1], &info))
-	{
-        mlx_destroy_window(info.mlx, info.win);
-		return (write(2, "Error\n Argument", 15));
-	}
+		return (write(2, "Error\n Argument", 15));ß
 	make_enemy(info.map, info.map_size.x, info.map_size.y, &info);
 	mlx_hook(info.win, X_EVENT_KEY_PRESS, 0, &key_hook_event, &info);
 	mlx_hook(info.win, ON_DESTROY, 0, &destory_hook_event, &info);
