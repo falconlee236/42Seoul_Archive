@@ -6,7 +6,7 @@
 /*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 18:11:29 by sangylee          #+#    #+#             */
-/*   Updated: 2023/08/01 16:46:47 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/08/04 14:52:32 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,10 @@ static int	init_enemy_set(t_info *info)
 
 int	info_init(t_info *info)
 {
+	if (!check_filename())
+		return (0);
 	info->mlx = mlx_init();
 	info->win = mlx_new_window(info->mlx, 2400, 900, "so_long");
-	info->collect_cnt = 0;
-	info->enemy_cnt = 0;
-	info->walk_cnt = 0;
 	info->wall_img = mlx_xpm_file_to_image(info->mlx,
 			"assets/wall.xpm", &info->img_size.x, &info->img_size.y);
 	info->collect_img = mlx_xpm_file_to_image(info->mlx,

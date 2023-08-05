@@ -8,14 +8,15 @@ SRCS=so_long.c\
 	make_enemy.c\
 	so_longutil.c\
 	hook_event.c\
-	loop_hook_event.c
+	loop_hook_event.c\
+	check_filename.c
 
 all: $(NAME)
 
 $(NAME):
 	@$(MAKE) -C mlx all
 	@$(MAKE) -C libft all
-	$(CFLAGS) $(NAME) $(SRCS) -L ./mlx -lmlx -framework OpenGL -framework Appkit -L ./libft -lft -g
+	$(CFLAGS) $(NAME) $(SRCS) -L ./mlx -lmlx -framework OpenGL -framework Appkit -L ./libft -lft
 
 clean:
 	@$(MAKE) -C mlx clean

@@ -6,13 +6,12 @@
 /*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 13:34:14 by sangylee          #+#    #+#             */
-/*   Updated: 2023/08/01 18:33:23 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/08/04 13:56:10 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-#include <time.h>
-#include <stdlib.h>
+#include "libft/ft_printf.h"
 
 void	next_enemy_pos(int *next_x, int *next_y, int x, int y)
 {
@@ -54,10 +53,14 @@ static void	patrol_enemy(t_info *info, int x, int y, int cnt)
 	if (next_y < 0 || next_y >= info->map_size.y
 		|| next_x < 0 || next_x >= info->map_size.x
 		|| info->map[next_x][next_y] == '1' || info->map[next_x][next_y] == 'E'
-		|| info->map[next_x][next_y] == 'C')
+		|| info->map[next_x][next_y] == 'C' || info->map[next_x][next_y] == 'X')
 		return ;
 	if (info->map[next_x][next_y] == 'P')
+	{
+		ft_printf("You lose!\n");
+		mlx_destroy_window(info->mlx, info->win);
 		exit(1);
+	}
 	info->map[next_x][next_y] = 'X';
 	info->map[x][y] = '0';
 }

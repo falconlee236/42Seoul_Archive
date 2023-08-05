@@ -6,7 +6,7 @@
 /*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 13:57:41 by sangylee          #+#    #+#             */
-/*   Updated: 2023/08/01 14:42:57 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/08/04 15:11:10 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
-# include <stdio.h>
+# include <time.h>
 # include "./libft/libft.h"
 # include "./mlx/mlx.h"
 
@@ -83,4 +83,7 @@ int		key_hook_event(int keycode, t_info *info);
 int		destory_hook_event(t_info *info);
 
 int		loop_hook_event(t_info *info);
+
+void	so_longfree(t_info *info);
+int		check_filename(void);
 #endif

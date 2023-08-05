@@ -6,7 +6,7 @@
 /*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 15:20:56 by sangylee          #+#    #+#             */
-/*   Updated: 2023/08/01 14:02:30 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/08/04 13:57:37 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,21 +63,21 @@ static int	count_empty(char **map, int row, int col)
 
 void	make_enemy(char **map, int row, int col, t_info *info)
 {
-	long long	rand_num;
-	int			i;
-	int			std;
+	int	rand_num;
+	int	i;
+	int	std;
 
 	i = 0;
-	rand_num = 324;
+	srand(time(NULL));
 	if (count_empty(map, row, col) < 5)
 		std = 0;
 	else
 		std = 4;
 	while (i < std)
 	{
-		rand_num = (1103515245 * rand_num + 12345) % (row * col);
+		rand_num = rand() % (row * col);
 		while (map[rand_num / col][rand_num % col] != '0')
-			rand_num = (1103515245 * rand_num + 12345) % (row * col);
+			rand_num = rand() % (row * col);
 		map[rand_num / col][rand_num % col] = 'X';
 		i++;
 		info->enemy_cnt++;

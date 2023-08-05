@@ -6,7 +6,7 @@
 /*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 14:38:02 by sangylee          #+#    #+#             */
-/*   Updated: 2023/08/01 13:18:21 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/08/04 15:28:17 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	free_arr(char **arr)
 	int	i;
 
 	i = 0;
+	if (!arr || !(*arr))
+		return (0);
 	while (arr[i])
 		free(arr[i++]);
 	free(arr);
@@ -59,6 +61,8 @@ int	ft_strlen_without_newline(char *s)
 
 	len = 0;
 	num = -1;
+	if (!s)
+		return (0);
 	while (s[len])
 	{
 		if (s[len] == '\n')
@@ -76,6 +80,8 @@ int	ft_strlen_without_newline(char *s)
 
 int	free_return(char *str)
 {
+	if (!str)
+		return (0);
 	free(str);
 	return (0);
 }
