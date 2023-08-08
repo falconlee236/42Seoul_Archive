@@ -97,4 +97,5 @@ int	main(int ac, char **av, char **env)
 		else
 			parents(fds, pid1, pid2, path);
 	}
+    exit(0);
 }
