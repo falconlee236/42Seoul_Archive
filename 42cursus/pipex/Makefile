@@ -2,12 +2,13 @@ NAME=pipex
 CFLAGS=cc -Wall -Wextra -Werror -o
 
 SRCS=pipex.c\
+	pipex_util.c
 
 all: $(NAME)
 
 $(NAME):
 	@$(MAKE) -C libft all
-	$(CFLAGS) $(NAME) $(SRCS) -L ./libft -lft
+	$(CFLAGS) $(NAME) $(SRCS) -L ./libft -lft -g
 
 clean:
 	@$(MAKE) -C libft clean

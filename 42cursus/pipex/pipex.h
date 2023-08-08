@@ -6,7 +6,7 @@
 /*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 16:09:10 by sangylee          #+#    #+#             */
-/*   Updated: 2023/08/05 16:55:20 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/08/08 21:48:48 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,8 @@
 /* malloc() free() exit() */
 # include <errno.h>
 
+void	print_error(char *str);
+void	free_arr(char **arr);
+void	run_command(char *c_name, char **path, char **env);
+char	**pipe_init(int ac, char **env, int fds[2]);
 #endif
