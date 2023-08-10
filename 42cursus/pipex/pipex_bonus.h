@@ -20,4 +20,12 @@
 /* malloc() free() exit() */
 # include <errno.h>
 
+typedef struct s_pipes
+{
+    int a[2];
+    int b[2];
+    int step;
+    int cnt;
+} t_pipes;
+
 #endif //INC_42SEOUL_ARCHIVE_PIPEX_BONUS_H

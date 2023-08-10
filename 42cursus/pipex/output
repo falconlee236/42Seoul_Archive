@@ -1,0 +1,9 @@
+Makefile
+input
+libft
+output
+pipex
+pipex.c
+pipex.h
+pipex_bonus.c
+pipex_bonus.h
