@@ -29,9 +29,9 @@ void    child_proc(t_pipes pipes, char **av, char **env)
             print_error("pipex: input file open error in first");
         if (dup2(fd, STDIN_FILENO) < 0)
             print_error("pipex: dup2 error stdin to input in first");
+        close(fd);
         if (dup2(pipes.a[1], STDOUT_FILENO) < 0)
             print_error("pipex: dup2 error stdout to pipeA in first");
-        close(fd);
         close(pipes.a[0]);
         char *argv[] = {"ls", NULL};
         execve("/bin/ls", argv, env);
@@ -40,6 +40,9 @@ void    child_proc(t_pipes pipes, char **av, char **env)
         fd = open(av[pipes.cnt + 2], O_RDWR | O_TRUNC | O_CREAT, 0644);
         if (fd < 0)
             print_error("pipex: output file open error in end");
+        if (dup2(fd, STDOUT_FILENO) < 0)
+            print_error("pipex: dup2 error stdout to pipeA in end");
+        close(fd);
         if (!(pipes.step % 2))
         {
             if (dup2(pipes.b[0], STDIN_FILENO) < 0)
@@ -52,9 +55,6 @@ void    child_proc(t_pipes pipes, char **av, char **env)
                 print_error("pipex: dup2 error stdin to pipeA in end");
             close(pipes.a[1]);
         }
-        if (dup2(fd, STDOUT_FILENO) < 0)
-            print_error("pipex: dup2 error stdout to pipeA in end");
-        close(fd);
         char *argv[] = {"ls", NULL};
         execve("/bin/ls", argv, env);
     }
@@ -64,9 +64,9 @@ void    child_proc(t_pipes pipes, char **av, char **env)
         {
             if (dup2(pipes.b[0], STDIN_FILENO) < 0)
                 print_error("pipex: dup2 error stdin to pipeB in middle");
+            close(pipes.b[1]);
             if (dup2(pipes.a[1], STDOUT_FILENO) < 0)
                 print_error("pipex: dup2 error stdout to pipeA in middle");
-            close(pipes.b[1]);
             close(pipes.a[0]);
             char *argv[] = {"ls", NULL};
             execve("/bin/ls", argv, env);
@@ -75,9 +75,9 @@ void    child_proc(t_pipes pipes, char **av, char **env)
         {
             if (dup2(pipes.a[0], STDIN_FILENO) < 0)
                 print_error("pipex: dup2 error stdin to pipeA in middle");
+            close(pipes.a[1]);
             if (dup2(pipes.b[1], STDOUT_FILENO) < 0)
                 print_error("pipex: dup2 error stdout to pipeB in middle");
-            close(pipes.a[1]);
             close(pipes.b[0]);
             char *argv[] = {"ls", NULL};
             execve("/bin/ls", argv, env);
@@ -90,7 +90,9 @@ void    parent_proc(t_pipes pipes, pid_t pid)
     setbuf(stderr, 0);
     fprintf(stderr, "im a %d step parent process!!\n", pipes.step);
     if (pipes.step == 0)
-        close(pipes.a[0]);
+    {
+//        close(pipes.a[0]);
+    }
     else if (pipes.step == pipes.cnt - 1)
     {
         if (!(pipes.step % 2))
@@ -102,17 +104,17 @@ void    parent_proc(t_pipes pipes, pid_t pid)
     {
         if (!(pipes.step % 2))
         {
-            close(pipes.a[0]);
-            close(pipes.a[1]);
-            close(pipes.b[0]);
-            close(pipes.b[0]);
+//            close(pipes.a[0]);
+//            close(pipes.a[1]);
+//            close(pipes.b[0]);
+            close(pipes.b[1]);
         }
         else
         {
-            close(pipes.a[0]);
+//            close(pipes.a[0]);
             close(pipes.a[1]);
-            close(pipes.b[0]);
-            close(pipes.b[1]);
+//            close(pipes.b[0]);
+//            close(pipes.b[1]);
         }
     }
     waitpid(pid, 0, 0);
@@ -133,7 +135,7 @@ int main(int ac, char **av, char **env)
     {
         if (!(pipes.step % 2) && pipe(pipes.a) < 0)
             print_error("pipex: pipeA error");
-        if (!(pipes.step % 2) && pipe(pipes.b) < 0)
+        if ((pipes.step % 2) && pipe(pipes.b) < 0)
             print_error("pipex: pipeB error");
         pid = fork();
         if (pid == -1)

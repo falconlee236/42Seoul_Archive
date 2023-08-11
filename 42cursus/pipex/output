@@ -1,6 +1,7 @@
 Makefile
 input
 libft
+lsoutput
 output
 pipex
 pipex.c
