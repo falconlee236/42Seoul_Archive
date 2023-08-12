@@ -5,97 +5,64 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/05 16:04:48 by sangylee          #+#    #+#             */
-/*   Updated: 2023/08/08 21:52:36 by sangylee         ###   ########.fr       */
+/*   Created: 2023/08/12 12:58:03 by sangylee          #+#    #+#             */
+/*   Updated: 2023/08/12 20:14:41 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-#include "./libft/ft_printf.h"
 
-static void	file1(char **path, char **av, int fds[2], char **env)
+static	void	pipex_init(t_pipes *pipes, int ac, char **env)
 {
-	int	fd;
-
-	fd = open(av[1], O_RDONLY);
-	if (fd == -1)
-	{
-		free_arr(path);
-		print_error("pipex: input");
-	}
-	if (dup2(fd, 0) < 0)
-	{
-		close(fd);
-		print_error("file1 function first dup2 error");
-	}
-	if (dup2(fds[1], 1) < 0)
-	{
-		close(fd);
-		close(fds[1]);
-		print_error("file1 function second dup2 error");
-	}
-	close(fd);
-	close(fds[0]);
-	run_command(av[2], path, env);
+	pipes->cnt = ac - 3;
+	pipes->step = -1;
+	pipes->path = make_path(env);
+	pipes->pid_arr = (pid_t *)malloc(sizeof(pid_t) * (pipes->cnt + 1));
+	pipes->pid_arr[pipes->cnt] = 0;
 }
 
-static void	file2(char **path, char **av, int fds[2], char **env)
+void	wait_proc(t_pipes pipes)
 {
-	int	fd;
-
-	fd = open(av[4], O_RDWR | O_TRUNC | O_CREAT, 0644);
-	if (fd == -1)
-		print_error("invaild file2\n");
-	if (dup2(fd, 1) < 0)
-	{
-		close(fd);
-		print_error("file2 function first dup2 error");
-	}
-	if (dup2(fds[0], 0) < 0)
-	{
-		close(fd);
-		close(fds[0]);
-		print_error("file2 function second dup2 error");
-	}
-	close(fd);
-	close(fds[1]);
-	run_command(av[3], path, env);
-}
-
-static void	parents(int fds[2], int pid1, int pid2, char **path)
-{
+	int	cnt;
 	int	i;
 
+	cnt = 0;
 	i = 0;
-	close(fds[0]);
-	close(fds[1]);
-	waitpid(pid1, NULL, 0);
-	waitpid(pid2, NULL, 0);
-	free_arr(path);
+	while (cnt != pipes.cnt)
+	{
+		if (waitpid(pipes.pid_arr[i % pipes.cnt], 0, 0)
+			== pipes.pid_arr[i % pipes.cnt])
+			cnt++;
+		i++;
+	}
+	free_arr(pipes.path);
+	free(pipes.pid_arr);
 }
 
 int	main(int ac, char **av, char **env)
 {
-	char	**path;
-	int		fds[2];
-	pid_t	pid1;
-	pid_t	pid2;
+	t_pipes	pipes;
+	pid_t	pid;
 
-	path = pipe_init(ac, env, fds);
-	pid1 = fork();
-	if (pid1 < 0)
-		print_error("fork error");
-	if (pid1 == 0)
-		file1(path, av, fds, env);
-	else
+	if (ac != 5)
+		print_error("pipex: too less/many arguments");
+	pipex_init(&pipes, ac, env);
+	while (++pipes.step < pipes.cnt)
 	{
-		pid2 = fork();
-		if (pid2 < 0)
-			print_error("fork error");
-		if (pid2 == 0)
-			file2(path, av, fds, env);
+		if (!(pipes.step % 2) && pipe(pipes.a) < 0)
+			print_error("pipex: pipeA error");
+		if ((pipes.step % 2) && pipe(pipes.b) < 0)
+			print_error("pipex: pipeB error");
+		pid = fork();
+		if (pid == -1)
+			print_error("pipex: fork error");
+		else if (!pid)
+			child_proc(pipes, av, env);
 		else
-			parents(fds, pid1, pid2, path);
+		{
+			pipes.pid_arr[pipes.step] = pid;
+			parent_proc(pipes);
+		}
 	}
-    exit(0);
+	wait_proc(pipes);
 }

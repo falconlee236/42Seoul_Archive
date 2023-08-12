@@ -6,7 +6,7 @@
 #    By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/16 22:07:12 by sangylee          #+#    #+#              #
-#    Updated: 2023/07/14 15:03:14 by sangylee         ###   ########.fr        #
+#    Updated: 2023/08/08 12:45:35 by sangylee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ SRCS=ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c \
 	get_next_line.c get_next_line_utils.c\
 	format_c.c format_d.c format_p.c\
 	format_s.c format_u.c format_x.c\
-	format_x_upper.c ft_printf.c
+	format_x_upper.c ft_printf.c\
+	ft_split_mult.c
 
 SRCS_BONUS =ft_lstnew_bonus.c \
 			ft_lstadd_front_bonus.c \

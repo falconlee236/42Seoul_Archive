@@ -6,7 +6,7 @@
 /*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 16:09:10 by sangylee          #+#    #+#             */
-/*   Updated: 2023/08/08 21:48:48 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/08/12 20:14:35 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,21 @@
 /* malloc() free() exit() */
 # include <errno.h>
 
+typedef struct s_pipes
+{
+	int		a[2];
+	int		b[2];
+	int		step;
+	int		cnt;
+	char	**path;
+	pid_t	*pid_arr;
+}	t_pipes;
+
 void	print_error(char *str);
 void	free_arr(char **arr);
 void	run_command(char *c_name, char **path, char **env);
-char	**pipe_init(int ac, char **env, int fds[2]);
+char	**make_path(char **env);
+
+void	child_proc(t_pipes pipes, char **av, char **env);
+void	parent_proc(t_pipes pipes);
 #endif

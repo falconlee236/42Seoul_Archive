@@ -6,7 +6,7 @@
 /*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 20:32:05 by sangylee          #+#    #+#             */
-/*   Updated: 2023/07/14 17:00:30 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/08/08 12:45:19 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,5 @@ void		ft_lstiter(t_list *lst, void (*f)(void *));
 t_list		*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 //custom
 long long	ft_atoll(const char *str);
+char		**ft_split_mult(char const *s, char const *deli);
 #endif
