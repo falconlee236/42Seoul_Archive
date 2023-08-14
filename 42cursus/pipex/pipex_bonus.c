@@ -6,7 +6,7 @@
 /*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 12:58:03 by sangylee          #+#    #+#             */
-/*   Updated: 2023/08/12 20:57:29 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/08/14 15:13:21 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,21 @@ static	void	make_tmpfile(char *limiter)
 	fd = open("tmpfile", O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (fd < 0)
 		print_error("pipex: tmp file open error");
-	line = "";
-	while (ft_strncmp(limiter, line, ft_strlen(limiter)))
+	while (1)
 	{
 		line = get_next_line(0);
+		if (ft_strlen(limiter) == 0 && line[0] == '\n')
+		{
+			free(line);
+			break ;
+		}
+		else if (ft_strncmp(limiter, line, ft_strlen(limiter)) == 0
+			&& ft_strlen(limiter) != 0
+			&& ft_strlen(line) == ft_strlen(limiter) + 1)
+		{
+			free(line);
+			break ;
+		}
 		ft_putstr_fd(line, fd);
 		free(line);
 	}
