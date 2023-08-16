@@ -1,9 +1,0 @@
-//
-// Created by 이상윤 on 2023/08/14.
-//
-
-#ifndef INC_42SEOUL_ARCHIVE_PHILOSOPHER_H
-#define INC_42SEOUL_ARCHIVE_PHILOSOPHER_H
-
-#include <unistd.h>
-#endif //INC_42SEOUL_ARCHIVE_PHILOSOPHER_H
