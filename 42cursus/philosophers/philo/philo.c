@@ -12,9 +12,11 @@
 
 #include "philo.h"
 
-int	main(void)
+int	main(int ac, char **av)
 {
-	printf("hello world!\n");
-    printf("this is a first commit");
-    return (0);
+    struct timeval  t1;
+	if (ac < 5 || ac > 6)
+        return (0);
+    gettimeofday(&t1, 0);
+    printf("%ld %s\n", t1.tv_sec, av[0]);
 }
