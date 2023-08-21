@@ -6,7 +6,7 @@
 /*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 13:44:11 by sangylee          #+#    #+#             */
-/*   Updated: 2023/08/21 14:14:03 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/08/21 14:24:42 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@ long long	ft_atoll(char *str)
 	while (str[i] && (str[i] >= '0' && str[i] <= '9'))
 		res = (res * 10LL) + (str[i++] - '0');
 	return (res * flag);
+}
+
+int	pthread_init(t_data *data)
+{
+	int	cnt;
+
+	cnt = data->philo_num;
 }
 
 int	philo_init(t_data *data, int ac, char **av)
