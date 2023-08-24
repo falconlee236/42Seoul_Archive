@@ -2,6 +2,7 @@ NAME=philo
 CFLAGS=cc -Wall -Wextra -Werror -o
 
 SRCS=philo.c\
+		run_philo.c
 
 # SRCS_BONUS=pipex_bonus.c\
 # 			pipex_util_bonus.c\

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 19:12:39 by sangylee          #+#    #+#             */
-/*   Updated: 2023/08/21 14:05:30 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/08/25 00:36:18 by isang-yun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,14 @@
  * pthread_mutex_init, pthread_mutex_destory,
  * pthread_mutex_lock, pthread_mutex_unlock */
 
+typedef struct s_philo
+{
+	int			id;
+	int			left;
+	int			right;
+	pthread_t	thread;
+}	t_philo;
+
 typedef struct s_data
 {
 	int				philo_num;
@@ -30,7 +38,10 @@ typedef struct s_data
 	int				eat_time;
 	int				sleep_time;
 	int				must_eat;
-	pthread_t		*philos;
+	t_philo			*philos;
+	pthread_t		monitor;
 	pthread_mutex_t	*forks;
 }	t_data;
+
+int	run_philo(t_data *data);
 #endif

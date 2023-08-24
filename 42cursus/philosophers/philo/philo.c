@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 13:44:11 by sangylee          #+#    #+#             */
-/*   Updated: 2023/08/21 14:24:42 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/08/25 00:44:50 by isang-yun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,21 @@ long long	ft_atoll(char *str)
 	return (res * flag);
 }
 
-int	pthread_init(t_data *data)
+int	ft_mutex_init(t_data *data)
 {
 	int	cnt;
 
 	cnt = data->philo_num;
+	while (--cnt)
+	{
+		if (pthread_mutex_init(&data->forks[cnt], 0) != 0)
+		{
+			free(data->philos);
+			free(data->forks);
+			return (0);
+		}
+	}
+	return (1);
 }
 
 int	philo_init(t_data *data, int ac, char **av)
@@ -49,8 +59,8 @@ int	philo_init(t_data *data, int ac, char **av)
 	data->sleep_time = ft_atoll(av[4]);
 	if (ac == 6)
 		data->must_eat = ft_atoll(av[5]);
-	data->philos = (pthread_t *)malloc(
-			sizeof(pthread_t) * (data->philo_num + 1));
+	data->philos = (t_philo *)malloc(
+			sizeof(t_philo) * (data->philo_num + 1));
 	if (!data->philos)
 		return (0);
 	data->forks = (pthread_mutex_t *)malloc(
@@ -60,6 +70,9 @@ int	philo_init(t_data *data, int ac, char **av)
 		free(data->philos);
 		return (0);
 	}
+	if (!ft_mutex_init(data))
+		return (0);
+	return (1);
 }
 
 int	main(int ac, char **av)
@@ -68,4 +81,5 @@ int	main(int ac, char **av)
 
 	if (ac < 5 || ac > 6 || !philo_init(&data, ac, av))
 		return (0);
+	run_philo(&data);
 }
