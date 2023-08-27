@@ -6,7 +6,7 @@
 /*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 19:12:39 by sangylee          #+#    #+#             */
-/*   Updated: 2023/08/27 15:32:02 by isang-yun        ###   ########.fr       */
+/*   Updated: 2023/08/27 16:17:19 by isang-yun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,6 @@
  * pthread_mutex_init, pthread_mutex_destory,
  * pthread_mutex_lock, pthread_mutex_unlock */
 
-typedef struct s_philo
-{
-	int			id;
-	int			left;
-	int			right;
-	int			eat_cnt;
-	pthread_t	thread;
-}	t_philo;
-
 typedef struct s_data
 {
 	int				philo_num;
@@ -40,9 +31,18 @@ typedef struct s_data
 	int				sleep_time;
 	int				must_eat;
 	int				monitor;
-	t_philo			*philos;
 	pthread_mutex_t	*forks;
 }	t_data;
 
-int	run_philo(t_data *data);
+typedef struct s_philo
+{
+	int			id;
+	int			left;
+	int			right;
+	int			eat_cnt;
+	pthread_t	thread;
+	t_data		data;
+}	t_philo;
+
+int	run_philo(t_data *data, t_philo *philos);
 #endif

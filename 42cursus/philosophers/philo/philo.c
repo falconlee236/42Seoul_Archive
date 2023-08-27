@@ -6,7 +6,7 @@
 /*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 13:44:11 by sangylee          #+#    #+#             */
-/*   Updated: 2023/08/27 15:45:50 by isang-yun        ###   ########.fr       */
+/*   Updated: 2023/08/27 16:19:49 by isang-yun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	ft_mutex_init(t_data *data)
 	{
 		if (pthread_mutex_init(&data->forks[cnt], 0) != 0)
 		{
-			free(data->philos);
 			free(data->forks);
 			return (0);
 		}
@@ -61,18 +60,9 @@ int	philo_init(t_data *data, int ac, char **av)
 	data->monitor = 0;
 	if (ac == 6)
 		data->must_eat = ft_atoll(av[5]);
-	data->philos = (t_philo *)malloc(
-			sizeof(t_philo) * (data->philo_num + 1));
-	if (!data->philos)
-		return (0);
 	data->forks = (pthread_mutex_t *)malloc(
 			sizeof(pthread_mutex_t) * (data->philo_num + 1));
-	if (!data->forks)
-	{
-		free(data->philos);
-		return (0);
-	}
-	if (!ft_mutex_init(data))
+	if (!data->forks || !ft_mutex_init(data))
 		return (0);
 	return (1);
 }
@@ -85,9 +75,16 @@ void	leak_check(void)
 int	main(int ac, char **av)
 {
 	t_data	data;
+	t_philo	*philos;
 
 	atexit(leak_check);
 	if (ac < 5 || ac > 6 || !philo_init(&data, ac, av))
 		return (0);
-	run_philo(&data);
+	philos = (t_philo *)malloc(sizeof(t_philo) * (data.philo_num + 1));
+	if (!philos)
+	{
+		free(data.forks);
+		return (0);
+	}
+	run_philo(&data, philos);
 }
