@@ -6,7 +6,7 @@
 /*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 13:44:11 by sangylee          #+#    #+#             */
-/*   Updated: 2023/08/27 16:19:49 by isang-yun        ###   ########.fr       */
+/*   Updated: 2023/08/28 00:11:35 by isang-yun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,9 @@ int	main(int ac, char **av)
 		free(data.forks);
 		return (0);
 	}
-	run_philo(&data, philos);
+	if (!run_philo(&data, philos))
+	{
+		free(data.forks);
+		free(philos);
+	}
 }

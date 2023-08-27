@@ -6,7 +6,7 @@
 /*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:16:43 by isang-yun         #+#    #+#             */
-/*   Updated: 2023/08/27 16:59:59 by isang-yun        ###   ########.fr       */
+/*   Updated: 2023/08/28 00:08:34 by isang-yun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int	ft_philo_init(t_philo *philo, int id)
 	philo->left = id;
 	philo->right = (id + 1) % philo->data.philo_num;
 	philo->eat_cnt = 0;
-	pthread_create(&philo->thread, 0, ft_thread, philo);
+	if (pthread_create(&philo->thread, 0, ft_thread, philo) != 0)
+		return (0);
 	return (1);
 }
 
