@@ -6,7 +6,7 @@
 /*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:16:43 by isang-yun         #+#    #+#             */
-/*   Updated: 2023/08/27 16:24:51 by isang-yun        ###   ########.fr       */
+/*   Updated: 2023/08/27 16:59:59 by isang-yun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ void	*ft_thread(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	printf("im a %d thread!!\n", philo->id);
+	printf("\033[0;3%dmfirst %d thread!!\n\033[0m", philo->id % 8, philo->id);
+	printf("\033[0;3%dmsecond %d thread!!\n\033[0m", philo->id % 8, philo->id);
 	return (arg);
 }
 
@@ -27,7 +28,7 @@ int	ft_philo_init(t_philo *philo, int id)
 	philo->left = id;
 	philo->right = (id + 1) % philo->data.philo_num;
 	philo->eat_cnt = 0;
-	pthread_create(&philo->thread, 0, ft_thread, &philo[id]);
+	pthread_create(&philo->thread, 0, ft_thread, philo);
 	return (1);
 }
 
