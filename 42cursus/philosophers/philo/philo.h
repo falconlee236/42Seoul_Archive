@@ -6,7 +6,7 @@
 /*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 19:12:39 by sangylee          #+#    #+#             */
-/*   Updated: 2023/08/25 00:36:18 by isang-yun        ###   ########.fr       */
+/*   Updated: 2023/08/27 15:32:02 by isang-yun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_philo
 	int			id;
 	int			left;
 	int			right;
+	int			eat_cnt;
 	pthread_t	thread;
 }	t_philo;
 
@@ -38,8 +39,8 @@ typedef struct s_data
 	int				eat_time;
 	int				sleep_time;
 	int				must_eat;
+	int				monitor;
 	t_philo			*philos;
-	pthread_t		monitor;
 	pthread_mutex_t	*forks;
 }	t_data;
 

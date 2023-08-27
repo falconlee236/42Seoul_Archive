@@ -6,7 +6,7 @@
 /*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 13:44:11 by sangylee          #+#    #+#             */
-/*   Updated: 2023/08/25 00:44:50 by isang-yun        ###   ########.fr       */
+/*   Updated: 2023/08/27 15:45:50 by isang-yun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ int	philo_init(t_data *data, int ac, char **av)
 	data->die_time = ft_atoll(av[2]);
 	data->eat_time = ft_atoll(av[3]);
 	data->sleep_time = ft_atoll(av[4]);
+	data->must_eat = 0;
+	data->monitor = 0;
 	if (ac == 6)
 		data->must_eat = ft_atoll(av[5]);
 	data->philos = (t_philo *)malloc(
@@ -75,10 +77,16 @@ int	philo_init(t_data *data, int ac, char **av)
 	return (1);
 }
 
+void	leak_check(void)
+{
+	system("leaks philo");
+}
+
 int	main(int ac, char **av)
 {
 	t_data	data;
 
+	atexit(leak_check);
 	if (ac < 5 || ac > 6 || !philo_init(&data, ac, av))
 		return (0);
 	run_philo(&data);
