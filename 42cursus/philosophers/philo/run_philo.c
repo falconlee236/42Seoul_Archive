@@ -6,7 +6,7 @@
 /*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:16:43 by isang-yun         #+#    #+#             */
-/*   Updated: 2023/08/31 11:04:14 by isang-yun        ###   ########.fr       */
+/*   Updated: 2023/09/01 01:04:24 by isang-yun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,15 @@ void	*ft_thread(void *arg)
 {
 	t_philo			*philo;
 	struct timeval	tv;
-	double			a;
 	double			b;
 	int				i;
 
 	philo = (t_philo *)arg;
 	i = 0;
+	gettimeofday(&tv, 0);
+	philo->init_time = tv.tv_sec * 1000 + tv.tv_usec / 1000;
 	while (i < 5)
 	{
-		gettimeofday(&tv, 0);
-		a = tv.tv_sec * 1000 + tv.tv_usec / 1000;
 		pthread_mutex_lock(&philo->data.forks[philo->left]);
 		pthread_mutex_lock(&philo->data.forks[philo->right]);
 		printf("\033[0;3%dmfirst %d thread-%d\n\033[0m",
@@ -35,7 +34,8 @@ void	*ft_thread(void *arg)
 		usleep(philo->data.eat_time * 1000);
 		gettimeofday(&tv, 0);
 		b = tv.tv_sec * 1000 + tv.tv_usec / 1000;
-		printf("total time %d = %lf\n", philo->id, (b - a) / 1000);
+		printf("total time %d = %lf\n",
+			philo->id, (b - philo->init_time) / 1000);
 		pthread_mutex_unlock(&philo->data.forks[philo->right]);
 		pthread_mutex_unlock(&philo->data.forks[philo->left]);
 		i++;
