@@ -6,7 +6,7 @@
 /*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:16:43 by isang-yun         #+#    #+#             */
-/*   Updated: 2023/08/30 11:10:39 by isang-yun        ###   ########.fr       */
+/*   Updated: 2023/08/31 11:04:14 by isang-yun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,28 @@ void	*ft_thread(void *arg)
 	struct timeval	tv;
 	double			a;
 	double			b;
+	int				i;
 
 	philo = (t_philo *)arg;
-	gettimeofday(&tv, 0);
-	a = tv.tv_sec * 1000 + tv.tv_usec / 1000;
-	pthread_mutex_lock(&philo->data.forks[philo->left]);
-	pthread_mutex_lock(&philo->data.forks[philo->right]);
-	printf("\033[0;3%dmfirst %d thread!!\n\033[0m", philo->id % 8, philo->id);
-	usleep(2000000);
-	printf("\033[0;3%dmsecond %d thread!!\n\033[0m", philo->id % 8, philo->id);
-	gettimeofday(&tv, 0);
-	b = tv.tv_sec * 1000 + tv.tv_usec / 1000;
-	printf("total time %d = %lf\n", philo->id, (b - a) / 1000);
-	pthread_mutex_unlock(&philo->data.forks[philo->right]);
-	pthread_mutex_unlock(&philo->data.forks[philo->left]);
+	i = 0;
+	while (i < 5)
+	{
+		gettimeofday(&tv, 0);
+		a = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+		pthread_mutex_lock(&philo->data.forks[philo->left]);
+		pthread_mutex_lock(&philo->data.forks[philo->right]);
+		printf("\033[0;3%dmfirst %d thread-%d\n\033[0m",
+			philo->id % 8, philo->id, i);
+		printf("\033[0;3%dmsecond %d thread-%d\n\033[0m",
+			philo->id % 8, philo->id, i);
+		usleep(philo->data.eat_time * 1000);
+		gettimeofday(&tv, 0);
+		b = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+		printf("total time %d = %lf\n", philo->id, (b - a) / 1000);
+		pthread_mutex_unlock(&philo->data.forks[philo->right]);
+		pthread_mutex_unlock(&philo->data.forks[philo->left]);
+		i++;
+	}
 	return (arg);
 }
 
