@@ -6,7 +6,7 @@
 /*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 19:12:39 by sangylee          #+#    #+#             */
-/*   Updated: 2023/09/01 00:59:25 by isang-yun        ###   ########.fr       */
+/*   Updated: 2023/09/01 10:02:00 by isang-yun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct s_philo
 	int			left;
 	int			right;
 	int			eat_cnt;
-	double		init_time;
+	long long	init_time;
 	pthread_t	thread;
 	t_data		data;
 }	t_philo;

@@ -6,17 +6,19 @@
 /*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:16:43 by isang-yun         #+#    #+#             */
-/*   Updated: 2023/09/01 01:04:24 by isang-yun        ###   ########.fr       */
+/*   Updated: 2023/09/01 10:03:56 by isang-yun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+// long long	ft_get_time()
+
 void	*ft_thread(void *arg)
 {
 	t_philo			*philo;
 	struct timeval	tv;
-	double			b;
+	long long		b;
 	int				i;
 
 	philo = (t_philo *)arg;
@@ -34,7 +36,7 @@ void	*ft_thread(void *arg)
 		usleep(philo->data.eat_time * 1000);
 		gettimeofday(&tv, 0);
 		b = tv.tv_sec * 1000 + tv.tv_usec / 1000;
-		printf("total time %d = %lf\n",
+		printf("total time %d = %lld\n",
 			philo->id, (b - philo->init_time) / 1000);
 		pthread_mutex_unlock(&philo->data.forks[philo->right]);
 		pthread_mutex_unlock(&philo->data.forks[philo->left]);
