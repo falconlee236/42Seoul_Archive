@@ -6,7 +6,7 @@
 /*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:16:43 by isang-yun         #+#    #+#             */
-/*   Updated: 2023/09/03 01:06:28 by isang-yun        ###   ########.fr       */
+/*   Updated: 2023/09/03 16:04:04 by isang-yun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ void	*ft_thread(void *arg)
 	{
 		pthread_mutex_lock(&philo->data.forks[philo->left]);
 		pthread_mutex_lock(&philo->data.forks[philo->right]);
-		printf("\033[0;3%dmfirst %d thread-%d\n\033[0m",
+		printf("\033[0;3%dm %d has taken a fork - %d\n\033[0m",
 			philo->id % 8, philo->id, i);
-		printf("\033[0;3%dmsecond %d thread-%d\n\033[0m",
+		printf("\033[0;3%dm %d has taken a fork - %d\n\033[0m",
 			philo->id % 8, philo->id, i);
 		usleep(philo->data.eat_time * 1000);
 		b = ft_get_time();
