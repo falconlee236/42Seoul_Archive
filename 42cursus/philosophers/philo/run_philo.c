@@ -6,7 +6,7 @@
 /*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:16:43 by isang-yun         #+#    #+#             */
-/*   Updated: 2023/09/03 16:04:04 by isang-yun        ###   ########.fr       */
+/*   Updated: 2023/09/06 12:57:25 by isang-yun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,18 @@ double	ft_get_time(void)
 	gettimeofday(&tv, 0);
 	tv_res = tv.tv_sec * 1000 + tv.tv_usec / 1000;
 	return (tv_res);
+}
+
+void	usleep_interval(long long t)
+{
+	long long	res;
+
+	res = 0;
+	while (res <= t)
+	{
+		usleep(100);
+		res += 100ll;
+	}
 }
 
 void	*ft_thread(void *arg)
