@@ -6,7 +6,7 @@
 /*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:16:43 by isang-yun         #+#    #+#             */
-/*   Updated: 2023/09/06 12:57:25 by isang-yun        ###   ########.fr       */
+/*   Updated: 2023/09/07 01:20:19 by isang-yun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,11 @@ double	ft_get_time(void)
 
 void	usleep_interval(long long t)
 {
-	long long	res;
+	long long	target_time;
 
-	res = 0;
-	while (res <= t)
-	{
+	target_time = t + (long long)ft_get_time();
+	while (target_time > (long long)ft_get_time())
 		usleep(100);
-		res += 100ll;
-	}
 }
 
 void	*ft_thread(void *arg)
@@ -51,7 +48,7 @@ void	*ft_thread(void *arg)
 			philo->id % 8, philo->id, i);
 		printf("\033[0;3%dm %d has taken a fork - %d\n\033[0m",
 			philo->id % 8, philo->id, i);
-		usleep(philo->data.eat_time * 1000);
+		usleep_interval(philo->data.eat_time);
 		b = ft_get_time();
 		printf("total time %d = %lf\n",
 			philo->id, (b - philo->init_time) / 1000);
