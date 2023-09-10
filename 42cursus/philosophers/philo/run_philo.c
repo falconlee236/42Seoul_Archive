@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   run_philo.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
+/*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:16:43 by isang-yun         #+#    #+#             */
-/*   Updated: 2023/09/07 01:20:19 by isang-yun        ###   ########.fr       */
+/*   Updated: 2023/09/10 21:48:11 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-double	ft_get_time(void)
+long long	ft_get_time(void)
 {
 	struct timeval	tv;
-	double			tv_res;
+	long long		tv_res;
 
 	gettimeofday(&tv, 0);
 	tv_res = tv.tv_sec * 1000 + tv.tv_usec / 1000;
@@ -34,7 +34,7 @@ void	usleep_interval(long long t)
 void	*ft_thread(void *arg)
 {
 	t_philo			*philo;
-	double			b;
+	long long		b;
 	int				i;
 
 	philo = (t_philo *)arg;
@@ -44,13 +44,13 @@ void	*ft_thread(void *arg)
 	{
 		pthread_mutex_lock(&philo->data.forks[philo->left]);
 		pthread_mutex_lock(&philo->data.forks[philo->right]);
-		printf("\033[0;3%dm %d has taken a fork - %d\n\033[0m",
-			philo->id % 8, philo->id, i);
-		printf("\033[0;3%dm %d has taken a fork - %d\n\033[0m",
-			philo->id % 8, philo->id, i);
+		printf("\033[0;3%dm %lld %d has taken a fork\n\033[0m",
+			philo->id % 8, ft_get_time() - philo->init_time, philo->id);
+		printf("\033[0;3%dm %lld %d has taken a fork\n\033[0m",
+			philo->id % 8, ft_get_time() - philo->init_time, philo->id);
 		usleep_interval(philo->data.eat_time);
 		b = ft_get_time();
-		printf("total time %d = %lf\n",
+		printf("total time %d = %lld\n",
 			philo->id, (b - philo->init_time) / 1000);
 		pthread_mutex_unlock(&philo->data.forks[philo->right]);
 		pthread_mutex_unlock(&philo->data.forks[philo->left]);
