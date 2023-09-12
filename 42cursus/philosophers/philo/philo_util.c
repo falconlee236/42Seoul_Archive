@@ -6,7 +6,7 @@
 /*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 14:03:37 by isang-yun         #+#    #+#             */
-/*   Updated: 2023/09/12 14:17:58 by isang-yun        ###   ########.fr       */
+/*   Updated: 2023/09/12 15:15:12 by isang-yun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,7 @@ long long	ft_get_time(void)
 int	check_die(t_philo *philo)
 {
 	if (philo->last_time - philo->init_time >= philo->data.die_time)
-		return (
-                printf("%lld %d is died\n", philo->last_time - ft_get_time(), philo->id)
-        );
+		return (1);
 	return (0);
 }
 
@@ -38,4 +36,13 @@ void	usleep_interval(long long t)
 	target_time = t + (long long)ft_get_time();
 	while (target_time > (long long)ft_get_time())
 		usleep(100);
+}
+
+void	ft_print_format(t_philo *philo, char *format, int fork)
+{
+	long long	timestamp;
+
+	timestamp = philo->last_time - philo->init_time;
+	printf("\033[0;3%dm%lld %d %s %d\n\033[0m", 
+		philo->id % 8, timestamp, philo->id, format, fork);
 }

@@ -6,7 +6,7 @@
 /*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:16:43 by isang-yun         #+#    #+#             */
-/*   Updated: 2023/09/12 14:24:17 by isang-yun        ###   ########.fr       */
+/*   Updated: 2023/09/12 15:21:46 by isang-yun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,22 @@ void	*ft_thread(void *arg)
 	philo = (t_philo *)arg;
 	philo->init_time = ft_get_time();
 	philo->last_time = philo->init_time;
+	if (philo->id % 2 == 0)
+		usleep_interval(1000);
 	while (!check_die(philo))
 	{
 		pthread_mutex_lock(&philo->data.forks[philo->left]);
+		ft_print_format(philo, "has taken a fork", philo->left);
 		pthread_mutex_lock(&philo->data.forks[philo->right]);
-		printf("\033[0;3%dm %lld %d has taken a fork\n\033[0m",
-			philo->id % 8, philo->last_time - philo->init_time, philo->id);
-		printf("\033[0;3%dm %lld %d has taken a fork\n\033[0m",
-			philo->id % 8, philo->last_time - philo->init_time, philo->id);
-		usleep_interval(philo->data.eat_time);
+		ft_print_format(philo, "has taken a fork", philo->right);
+		ft_print_format(philo, "is eating", -1);
 		philo->last_time = ft_get_time();
+		usleep_interval(philo->data.eat_time);
 		pthread_mutex_unlock(&philo->data.forks[philo->right]);
 		pthread_mutex_unlock(&philo->data.forks[philo->left]);
+		ft_print_format(philo, "is sleeping", -1);
+		usleep_interval(philo->data.sleep_time);
+		ft_print_format(philo, "is thinking", -1);
 	}
 	return (arg);
 }

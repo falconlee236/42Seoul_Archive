@@ -6,7 +6,7 @@
 /*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 19:12:39 by sangylee          #+#    #+#             */
-/*   Updated: 2023/09/12 14:04:39 by isang-yun        ###   ########.fr       */
+/*   Updated: 2023/09/12 15:15:30 by isang-yun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,5 @@ int			run_philo(t_data *data, t_philo *philos);
 long long	ft_get_time(void);
 int			check_die(t_philo *philo);
 void		usleep_interval(long long t);
+void		ft_print_format(t_philo *philo, char *format, int fork);
 #endif
