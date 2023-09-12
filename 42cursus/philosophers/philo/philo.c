@@ -6,7 +6,7 @@
 /*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 13:44:11 by sangylee          #+#    #+#             */
-/*   Updated: 2023/08/28 00:27:39 by isang-yun        ###   ########.fr       */
+/*   Updated: 2023/09/12 17:15:24 by isang-yun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	ft_mutex_init(t_data *data)
 			return (0);
 		}
 	}
+	pthread_mutex_init(&data->m_mutex, 0);
 	return (1);
 }
 
