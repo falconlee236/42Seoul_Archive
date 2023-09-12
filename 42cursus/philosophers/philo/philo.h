@@ -6,7 +6,7 @@
 /*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 19:12:39 by sangylee          #+#    #+#             */
-/*   Updated: 2023/09/01 10:02:00 by isang-yun        ###   ########.fr       */
+/*   Updated: 2023/09/12 14:04:39 by isang-yun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,14 @@ typedef struct s_philo
 	int			right;
 	int			eat_cnt;
 	long long	init_time;
+	long long	last_time;
 	pthread_t	thread;
 	t_data		data;
 }	t_philo;
 
-int	run_philo(t_data *data, t_philo *philos);
+int			run_philo(t_data *data, t_philo *philos);
+
+long long	ft_get_time(void);
+int			check_die(t_philo *philo);
+void		usleep_interval(long long t);
 #endif
