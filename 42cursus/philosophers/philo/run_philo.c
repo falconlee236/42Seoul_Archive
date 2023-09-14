@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_philo.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
+/*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:16:43 by isang-yun         #+#    #+#             */
-/*   Updated: 2023/09/12 17:19:38 by isang-yun        ###   ########.fr       */
+/*   Updated: 2023/09/14 17:00:58 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	*ft_thread(void *arg)
 
 	philo = (t_philo *)arg;
 	philo->init_time = ft_get_time();
-	philo->last_time = philo->init_time;
 	if (philo->id % 2 == 0)
-		usleep_interval(1000);
+		usleep_interval(500);
+	philo->last_time = ft_get_time();
 	while (!philo->data.monitor)
 	{
 		check_die(philo);
@@ -29,8 +29,8 @@ void	*ft_thread(void *arg)
 		pthread_mutex_lock(&philo->data.forks[philo->right]);
 		ft_print_format(philo, "has taken a fork", philo->right);
 		ft_print_format(philo, "is eating", -1);
-		philo->last_time = ft_get_time();
 		usleep_interval(philo->data.eat_time);
+		philo->last_time = ft_get_time();
 		pthread_mutex_unlock(&philo->data.forks[philo->right]);
 		pthread_mutex_unlock(&philo->data.forks[philo->left]);
 		ft_print_format(philo, "is sleeping", -1);
