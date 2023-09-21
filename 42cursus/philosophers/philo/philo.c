@@ -6,7 +6,7 @@
 /*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 13:44:11 by sangylee          #+#    #+#             */
-/*   Updated: 2023/09/17 18:13:09 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/09/21 14:59:33 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	ft_mutex_init(t_data *data)
 		}
 	}
 	pthread_mutex_init(&data->m_mutex, 0);
+	pthread_mutex_init(&data->eat_mutex, 0);
 	return (1);
 }
 

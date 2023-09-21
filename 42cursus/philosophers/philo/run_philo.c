@@ -6,7 +6,7 @@
 /*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:16:43 by isang-yun         #+#    #+#             */
-/*   Updated: 2023/09/17 18:40:21 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/09/21 16:00:50 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,15 @@ void	*ft_thread(void *arg)
 	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
 		usleep_interval(5);
-	while (!philo->data->monitor)
+	while (1)
 	{
+		pthread_mutex_lock(&philo->data->m_mutex);
+		if (philo->data->monitor)
+		{
+			pthread_mutex_unlock(&philo->data->m_mutex);
+			break ;
+		}
+		pthread_mutex_unlock(&philo->data->m_mutex);
 		pthread_mutex_lock(&philo->data->forks[philo->left]);
 		ft_print_format(philo, "has taken a fork", philo->left);
 		if (philo->data->philo_num != 1)
@@ -28,7 +35,9 @@ void	*ft_thread(void *arg)
 			pthread_mutex_lock(&philo->data->forks[philo->right]);
 			ft_print_format(philo, "has taken a fork", philo->right);
 			ft_print_format(philo, "is eating", -1);
+			pthread_mutex_lock(&philo->data->eat_mutex);
 			philo->last_time = ft_get_time();
+			pthread_mutex_unlock(&philo->data->eat_mutex);
 			usleep_interval(philo->data->eat_time);
 			ft_print_format(philo, "is sleeping", -1);
 			pthread_mutex_unlock(&philo->data->forks[philo->right]);
