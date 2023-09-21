@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
+/*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 19:12:39 by sangylee          #+#    #+#             */
-/*   Updated: 2023/09/12 17:18:02 by isang-yun        ###   ########.fr       */
+/*   Updated: 2023/09/17 18:36:31 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ typedef struct s_philo
 	long long	init_time;
 	long long	last_time;
 	pthread_t	thread;
-	t_data		data;
+	t_data		*data;
 }	t_philo;
 
 int			run_philo(t_data *data, t_philo *philos);
 
 long long	ft_get_time(void);
-void		check_die(t_philo *philo);
+void		check_die(t_data *data, t_philo *philos);
 void		usleep_interval(long long t);
 void		ft_print_format(t_philo *philo, char *format, int fork);
 #endif

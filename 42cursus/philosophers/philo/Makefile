@@ -13,7 +13,8 @@ SRCS=philo.c\
 all: $(NAME)
 
 $(NAME): $(SRCS)
-	$(CFLAGS) $(NAME) $(SRCS) -g -fsanitize=thread
+	# $(CFLAGS) $(NAME) $(SRCS) -g -fsanitize=thread
+	$(CFLAGS) $(NAME) $(SRCS) -g
 	touch mandatory
 	rm -f bonus
 

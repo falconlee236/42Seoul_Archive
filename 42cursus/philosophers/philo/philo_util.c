@@ -6,7 +6,7 @@
 /*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 14:03:37 by isang-yun         #+#    #+#             */
-/*   Updated: 2023/09/14 16:59:20 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/09/17 18:40:52 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,24 @@ long long	ft_get_time(void)
 	return (tv_res);
 }
 
-void	check_die(t_philo *philo)
+void	check_die(t_data *data, t_philo *philos)
 {
-	pthread_mutex_lock(&philo->data.m_mutex);
-	if (ft_get_time() - philo->last_time >= philo->data.die_time)
+	int	i;
+
+	while (!data->monitor)
 	{
-		philo->data.monitor = 1;
-		ft_print_format(philo, "is died", -1);
+		i = 0;
+		while (i < data->philo_num)
+		{
+			pthread_mutex_lock(&data->m_mutex);
+			if (ft_get_time() - philos[i]->last_time >= data->die_time)
+			{
+				data->monitor = 1;
+				ft_print_format(&philos[i]->thread, "died", -1);
+			}
+			pthread_mutex_unlock(&data->m_mutex);
+		}
 	}
-	pthread_mutex_unlock(&philo->data.m_mutex);
 }
 
 void	usleep_interval(long long t)
@@ -39,7 +48,7 @@ void	usleep_interval(long long t)
 
 	target_time = t + ft_get_time();
 	while (target_time > ft_get_time())
-		usleep(100);
+		usleep(1);
 }
 
 void	ft_print_format(t_philo *philo, char *format, int fork)
@@ -49,4 +58,7 @@ void	ft_print_format(t_philo *philo, char *format, int fork)
 	timestamp = ft_get_time() - philo->init_time;
 	printf("\033[0;3%dm%lld %d %s %d\n\033[0m",
 		philo->id % 8, timestamp, philo->id, format, fork);
+	// fork = 0;
+	// printf("\033[0;3%dm%lld %d %s\n\033[0m",
+	// 	philo->id % 8, timestamp, philo->id, format);
 }
