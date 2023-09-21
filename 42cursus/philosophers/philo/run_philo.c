@@ -6,7 +6,7 @@
 /*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:16:43 by isang-yun         #+#    #+#             */
-/*   Updated: 2023/09/21 16:00:50 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/09/21 16:52:49 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,24 @@ void	*ft_thread(void *arg)
 			pthread_mutex_lock(&philo->data->forks[philo->right]);
 			ft_print_format(philo, "has taken a fork", philo->right);
 			ft_print_format(philo, "is eating", -1);
+			philo->eat_cnt++;
+			if (philo->eat_cnt == philo->data->must_eat)
+			{
+				pthread_mutex_lock(&philo->data->eat_cnt_mutex);
+				philo->data->total_eat_cnt++;
+				pthread_mutex_unlock(&philo->data->eat_cnt_mutex);				
+			}
 			pthread_mutex_lock(&philo->data->eat_mutex);
 			philo->last_time = ft_get_time();
 			pthread_mutex_unlock(&philo->data->eat_mutex);
 			usleep_interval(philo->data->eat_time);
 			ft_print_format(philo, "is sleeping", -1);
 			pthread_mutex_unlock(&philo->data->forks[philo->right]);
+		}
+		else
+		{
+			usleep_interval(philo->data->die_time);
+			break ;
 		}
 		pthread_mutex_unlock(&philo->data->forks[philo->left]);
 		usleep_interval(philo->data->sleep_time);

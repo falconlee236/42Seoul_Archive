@@ -6,7 +6,7 @@
 /*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 13:44:11 by sangylee          #+#    #+#             */
-/*   Updated: 2023/09/21 14:59:33 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/09/21 17:14:54 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	ft_mutex_init(t_data *data)
 	}
 	pthread_mutex_init(&data->m_mutex, 0);
 	pthread_mutex_init(&data->eat_mutex, 0);
+	pthread_mutex_init(&data->eat_cnt_mutex, 0);
 	return (1);
 }
 
@@ -58,8 +59,9 @@ int	philo_init(t_data *data, int ac, char **av)
 	data->die_time = ft_atoll(av[2]);
 	data->eat_time = ft_atoll(av[3]);
 	data->sleep_time = ft_atoll(av[4]);
-	data->must_eat = 0;
+	data->must_eat = -1;
 	data->monitor = 0;
+	data->total_eat_cnt = 0;
 	if (ac == 6)
 		data->must_eat = ft_atoll(av[5]);
 	data->forks = (pthread_mutex_t *)malloc(
@@ -78,6 +80,7 @@ int	main(int ac, char **av)
 {
 	t_data	data;
 	t_philo	*philos;
+	int		i;
 
 	atexit(leak_check);
 	if (ac < 5 || ac > 6 || !philo_init(&data, ac, av))
@@ -88,9 +91,10 @@ int	main(int ac, char **av)
 		free(data.forks);
 		return (0);
 	}
-	if (!run_philo(&data, philos))
-	{
-		free(data.forks);
-		free(philos);
-	}
+	run_philo(&data, philos);
+	i = -1;
+	while (++i < data.philo_num)
+		pthread_mutex_destroy(&data.forks[i]);
+	free(data.forks);
+	free(philos);
 }

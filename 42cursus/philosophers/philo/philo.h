@@ -6,7 +6,7 @@
 /*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 19:12:39 by sangylee          #+#    #+#             */
-/*   Updated: 2023/09/21 15:35:44 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/09/21 16:52:26 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,11 @@ typedef struct s_data
 	int				sleep_time;
 	int				must_eat;
 	int				monitor;
+	int				total_eat_cnt;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	m_mutex;
 	pthread_mutex_t	eat_mutex;
+	pthread_mutex_t	eat_cnt_mutex;
 }	t_data;
 
 typedef struct s_philo

@@ -6,7 +6,7 @@
 /*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 14:03:37 by isang-yun         #+#    #+#             */
-/*   Updated: 2023/09/21 15:58:34 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/09/21 16:55:08 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,17 @@ void	check_die(t_data *data, t_philo *philos)
 	while (!flag)
 	{
 		i = -1;
+		pthread_mutex_lock(&data->eat_cnt_mutex);
+		if (data->total_eat_cnt == data->philo_num)
+		{
+			pthread_mutex_lock(&data->m_mutex);
+			data->monitor = 1;
+			flag = 1;
+			pthread_mutex_unlock(&data->m_mutex);
+			pthread_mutex_unlock(&data->eat_cnt_mutex);
+			break ;
+		}
+		pthread_mutex_unlock(&data->eat_cnt_mutex);
 		while (++i < data->philo_num)
 		{
 			pthread_mutex_lock(&data->eat_mutex);
