@@ -6,7 +6,7 @@
 /*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 19:12:39 by sangylee          #+#    #+#             */
-/*   Updated: 2023/09/21 16:52:26 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/10/05 18:30:30 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,5 @@ int			run_philo(t_data *data, t_philo *philos);
 long long	ft_get_time(void);
 void		check_die(t_data *data, t_philo *philos);
 void		usleep_interval(long long t);
-void		ft_print_format(t_philo *philo, char *format, int fork);
+void		ft_print_format(t_philo *philo, char *format);
 #endif

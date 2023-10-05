@@ -5,21 +5,15 @@ SRCS=philo.c\
 		run_philo.c\
 		philo_util.c
 
-# SRCS_BONUS=pipex_bonus.c\
-# 			pipex_util_bonus.c\
-# 			child_proc_bonus.c\
-# 			parent_proc_bonus.c
-
 all: $(NAME)
 
 $(NAME): $(SRCS)
-	# $(CFLAGS) $(NAME) $(SRCS) -g -fsanitize=thread
-	$(CFLAGS) $(NAME) $(SRCS) -g
+	$(CFLAGS) $(NAME) $(SRCS)
 	touch mandatory
 	rm -f bonus
 
 bonus: $(SRCS_BONUS)
-	$(CFLAGS) $(NAME) $(SRCS_BONUS) -g -fsanitize=thread
+	$(CFLAGS) $(NAME) $(SRCS_BONUS)
 	touch bonus
 	rm -f mandatory
 

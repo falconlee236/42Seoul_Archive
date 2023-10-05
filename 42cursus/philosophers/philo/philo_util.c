@@ -6,7 +6,7 @@
 /*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 14:03:37 by isang-yun         #+#    #+#             */
-/*   Updated: 2023/09/21 16:55:08 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/10/05 19:46:56 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,21 @@ long long	ft_get_time(void)
 	return (tv_res);
 }
 
+int	check_eat(t_data *data)
+{
+	pthread_mutex_lock(&data->eat_cnt_mutex);
+	if (data->total_eat_cnt == data->philo_num)
+	{
+		pthread_mutex_lock(&data->m_mutex);
+		data->monitor = 1;
+		pthread_mutex_unlock(&data->m_mutex);
+		pthread_mutex_unlock(&data->eat_cnt_mutex);
+		return (1);
+	}
+	pthread_mutex_unlock(&data->eat_cnt_mutex);
+	return (0);
+}
+
 void	check_die(t_data *data, t_philo *philos)
 {
 	int	i;
@@ -31,23 +46,14 @@ void	check_die(t_data *data, t_philo *philos)
 	while (!flag)
 	{
 		i = -1;
-		pthread_mutex_lock(&data->eat_cnt_mutex);
-		if (data->total_eat_cnt == data->philo_num)
-		{
-			pthread_mutex_lock(&data->m_mutex);
-			data->monitor = 1;
-			flag = 1;
-			pthread_mutex_unlock(&data->m_mutex);
-			pthread_mutex_unlock(&data->eat_cnt_mutex);
-			break ;
-		}
-		pthread_mutex_unlock(&data->eat_cnt_mutex);
+		if (check_eat(data) == 1)
+			return ;
 		while (++i < data->philo_num)
 		{
 			pthread_mutex_lock(&data->eat_mutex);
 			if (ft_get_time() - philos[i].last_time >= data->die_time)
 			{
-				ft_print_format(&philos[i], "died", -1);
+				ft_print_format(&philos[i], "died");
 				pthread_mutex_lock(&data->m_mutex);
 				data->monitor = 1;
 				flag = 1;
@@ -69,7 +75,7 @@ void	usleep_interval(long long t)
 		usleep(100);
 }
 
-void	ft_print_format(t_philo *philo, char *format, int fork)
+void	ft_print_format(t_philo *philo, char *format)
 {
 	long long	timestamp;
 
@@ -81,9 +87,6 @@ void	ft_print_format(t_philo *philo, char *format, int fork)
 		return ;
 	}
 	pthread_mutex_unlock(&philo->data->m_mutex);
-	printf("\033[0;3%dm%lld %d %s %d\n\033[0m",
-		philo->id % 8, timestamp, philo->id, format, fork);
-	// fork = 0;
-	// printf("\033[0;3%dm%lld %d %s\n\033[0m",
-	// 	philo->id % 8, timestamp, philo->id, format);
+	printf("\033[0;3%dm%lld %d %s\n\033[0m",
+		philo->id % 8, timestamp, philo->id, format);
 }

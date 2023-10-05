@@ -6,11 +6,31 @@
 /*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:16:43 by isang-yun         #+#    #+#             */
-/*   Updated: 2023/09/21 16:52:49 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/10/05 18:35:31 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	thread_logic(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->data->forks[philo->right]);
+	ft_print_format(philo, "has taken a fork");
+	ft_print_format(philo, "is eating");
+	philo->eat_cnt++;
+	if (philo->eat_cnt == philo->data->must_eat)
+	{
+		pthread_mutex_lock(&philo->data->eat_cnt_mutex);
+		philo->data->total_eat_cnt++;
+		pthread_mutex_unlock(&philo->data->eat_cnt_mutex);
+	}
+	pthread_mutex_lock(&philo->data->eat_mutex);
+	philo->last_time = ft_get_time();
+	pthread_mutex_unlock(&philo->data->eat_mutex);
+	usleep_interval(philo->data->eat_time);
+	ft_print_format(philo, "is sleeping");
+	pthread_mutex_unlock(&philo->data->forks[philo->right]);
+}
 
 void	*ft_thread(void *arg)
 {
@@ -29,34 +49,11 @@ void	*ft_thread(void *arg)
 		}
 		pthread_mutex_unlock(&philo->data->m_mutex);
 		pthread_mutex_lock(&philo->data->forks[philo->left]);
-		ft_print_format(philo, "has taken a fork", philo->left);
-		if (philo->data->philo_num != 1)
-		{
-			pthread_mutex_lock(&philo->data->forks[philo->right]);
-			ft_print_format(philo, "has taken a fork", philo->right);
-			ft_print_format(philo, "is eating", -1);
-			philo->eat_cnt++;
-			if (philo->eat_cnt == philo->data->must_eat)
-			{
-				pthread_mutex_lock(&philo->data->eat_cnt_mutex);
-				philo->data->total_eat_cnt++;
-				pthread_mutex_unlock(&philo->data->eat_cnt_mutex);				
-			}
-			pthread_mutex_lock(&philo->data->eat_mutex);
-			philo->last_time = ft_get_time();
-			pthread_mutex_unlock(&philo->data->eat_mutex);
-			usleep_interval(philo->data->eat_time);
-			ft_print_format(philo, "is sleeping", -1);
-			pthread_mutex_unlock(&philo->data->forks[philo->right]);
-		}
-		else
-		{
-			usleep_interval(philo->data->die_time);
-			break ;
-		}
+		ft_print_format(philo, "has taken a fork");
+		thread_logic(philo);
 		pthread_mutex_unlock(&philo->data->forks[philo->left]);
 		usleep_interval(philo->data->sleep_time);
-		ft_print_format(philo, "is thinking", -1);
+		ft_print_format(philo, "is thinking");
 	}
 	return (arg);
 }
