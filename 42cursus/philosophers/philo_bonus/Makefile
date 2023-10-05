@@ -9,10 +9,10 @@ all: $(NAME)
 
 $(NAME): $(SRCS)
 	$(CFLAGS) $(NAME) $(SRCS)
-	touch mandatory
+	touch bonus
 
 clean:
-	rm -f mandatory
+	rm -f bonus
 
 fclean: clean
 	rm -f $(NAME)
