@@ -1,9 +1,9 @@
-NAME=philo
+NAME=philo_bonus
 CFLAGS=cc -Wall -Wextra -Werror -o
 
-SRCS=philo.c\
-		run_philo.c\
-		philo_util.c
+SRCS=philo_bonus.c\
+		run_philo_bonus.c\
+		philo_util_bonus.c
 
 all: $(NAME)
 

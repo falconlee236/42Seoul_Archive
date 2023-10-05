@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   philo_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 13:44:11 by sangylee          #+#    #+#             */
-/*   Updated: 2023/10/05 19:49:03 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/10/05 21:48:58 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
 int	ft_atoi(const char *str, int *f)
 {
@@ -41,22 +41,15 @@ int	ft_atoi(const char *str, int *f)
 	return (res * flag);
 }
 
-int	ft_mutex_init(t_data *data)
+int	ft_sem_init(t_data *data)
 {
-	int	cnt;
-
-	cnt = 0;
-	while (cnt < data->philo_num)
-	{
-		if (pthread_mutex_init(&data->forks[cnt++], 0) != 0)
-		{
-			free(data->forks);
-			return (0);
-		}
-	}
-	pthread_mutex_init(&data->m_mutex, 0);
-	pthread_mutex_init(&data->eat_mutex, 0);
-	pthread_mutex_init(&data->eat_cnt_mutex, 0);
+	data->forks = sem_open("fork", O_CREAT, 0644, data->philo_num);
+	data->m_sem = sem_open("monitor", O_CREAT, 0644, 1);
+	data->eat_sem = sem_open("eat", O_CREAT, 0644, 1);
+	data->eat_cnt_sem = sem_open("eat_count", O_CREAT, 0644, 1);
+	if (data->forks == SEM_FAILED || data->m_sem == SEM_FAILED
+		|| data->eat_sem == SEM_FAILED || data->eat_cnt_sem == SEM_FAILED)
+		return (0);
 	return (1);
 }
 
@@ -88,9 +81,7 @@ int	philo_init(t_data *data, int ac, char **av)
 		return (0);
 	if (data->philo_num == 1)
 		return (case_one(data));
-	data->forks = (pthread_mutex_t *)malloc(
-			sizeof(pthread_mutex_t) * data->philo_num);
-	if (!data->forks || !ft_mutex_init(data))
+	if (!data->forks || !ft_sem_init(data))
 		return (0);
 	return (1);
 }
