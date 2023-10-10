@@ -2,13 +2,9 @@ NAME=philo
 
 all:
 	$(MAKE) -C philo all
-	touch mandatory
-	rm -f bonus
 
 bonus: 
 	$(MAKE) -C philo_bonus all
-	touch bonus
-	rm -f mandatory
 
 clean:
 	$(MAKE) -C philo clean

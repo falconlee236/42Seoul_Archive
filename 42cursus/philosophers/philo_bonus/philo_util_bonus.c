@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_util_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 14:03:37 by isang-yun         #+#    #+#             */
-/*   Updated: 2023/10/05 21:10:22 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/10/11 01:06:58 by isang-yun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,16 @@ long long	ft_get_time(void)
 
 int	check_eat(t_data *data)
 {
-	pthread_mutex_lock(&data->eat_cnt_mutex);
+	sem_wait(data->eat_cnt_sem);
 	if (data->total_eat_cnt == data->philo_num)
 	{
-		pthread_mutex_lock(&data->m_mutex);
+		sem_wait(data->m_sem);
 		data->monitor = 1;
-		pthread_mutex_unlock(&data->m_mutex);
-		pthread_mutex_unlock(&data->eat_cnt_mutex);
+		sem_post(data->m_sem);
+		sem_post(data->eat_cnt_sem);
 		return (1);
 	}
-	pthread_mutex_unlock(&data->eat_cnt_mutex);
+	sem_post(data->eat_cnt_sem);
 	return (0);
 }
 
@@ -50,18 +50,18 @@ void	check_die(t_data *data, t_philo *philos)
 			return ;
 		while (++i < data->philo_num)
 		{
-			pthread_mutex_lock(&data->eat_mutex);
+			sem_wait(data->eat_sem);
 			if (ft_get_time() - philos[i].last_time >= data->die_time)
 			{
 				ft_print_format(&philos[i], "died");
-				pthread_mutex_lock(&data->m_mutex);
+				sem_wait(data->m_sem);
 				data->monitor = 1;
 				flag = 1;
-				pthread_mutex_unlock(&data->m_mutex);
-				pthread_mutex_unlock(&data->eat_mutex);
+				sem_post(data->m_sem);
+				sem_post(data->eat_sem);
 				break ;
 			}
-			pthread_mutex_unlock(&data->eat_mutex);
+			sem_post(data->eat_sem);
 		}
 	}
 }
@@ -80,13 +80,13 @@ void	ft_print_format(t_philo *philo, char *format)
 	long long	timestamp;
 
 	timestamp = ft_get_time() - philo->init_time;
-	pthread_mutex_lock(&philo->data->m_mutex);
+	sem_wait(philo->data->m_sem);
 	if (philo->data->monitor)
 	{
-		pthread_mutex_unlock(&philo->data->m_mutex);
+		sem_post(philo->data->m_sem);
 		return ;
 	}
-	pthread_mutex_unlock(&philo->data->m_mutex);
+	sem_post(philo->data->m_sem);
 	printf("\033[0;3%dm%lld %d %s\n\033[0m",
 		philo->id % 8, timestamp, philo->id, format);
 }

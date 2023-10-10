@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 13:44:11 by sangylee          #+#    #+#             */
-/*   Updated: 2023/10/05 21:48:58 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/10/11 00:51:52 by isang-yun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	ft_atoi(const char *str, int *f)
 
 int	ft_sem_init(t_data *data)
 {
-	data->forks = sem_open("fork", O_CREAT, 0644, data->philo_num);
+	data->forks = sem_open("forks", O_CREAT, 0644, data->philo_num);
 	data->m_sem = sem_open("monitor", O_CREAT, 0644, 1);
 	data->eat_sem = sem_open("eat", O_CREAT, 0644, 1);
 	data->eat_cnt_sem = sem_open("eat_count", O_CREAT, 0644, 1);
@@ -90,20 +90,17 @@ int	main(int ac, char **av)
 {
 	t_data	data;
 	t_philo	*philos;
-	int		i;
 
 	if (ac < 5 || ac > 6 || !philo_init(&data, ac, av))
 		return (0);
 	philos = (t_philo *)malloc(sizeof(t_philo) * data.philo_num);
 	if (!philos)
-	{
-		free(data.forks);
-		return (0);
-	}
+		return (sem_close(data.forks));
 	run_philo(&data, philos);
-	i = -1;
-	while (++i < data.philo_num)
-		pthread_mutex_destroy(&data.forks[i]);
-	free(data.forks);
+	sem_close(data.m_sem);
+	sem_close(data.eat_sem);
+	sem_close(data.eat_cnt_sem);
+	sem_close(data.forks);
 	free(philos);
+	return (0);
 }

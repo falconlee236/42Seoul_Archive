@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_philo_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:16:43 by isang-yun         #+#    #+#             */
-/*   Updated: 2023/10/05 21:10:14 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/10/11 00:59:57 by isang-yun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,58 +14,55 @@
 
 void	thread_logic(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->data->forks[philo->right]);
+	sem_wait(philo->data->forks);
 	ft_print_format(philo, "has taken a fork");
 	ft_print_format(philo, "is eating");
 	philo->eat_cnt++;
 	if (philo->eat_cnt == philo->data->must_eat)
 	{
-		pthread_mutex_lock(&philo->data->eat_cnt_mutex);
+		sem_wait(philo->data->eat_cnt_sem);
 		philo->data->total_eat_cnt++;
-		pthread_mutex_unlock(&philo->data->eat_cnt_mutex);
+		sem_post(philo->data->eat_cnt_sem);
 	}
-	pthread_mutex_lock(&philo->data->eat_mutex);
+	sem_wait(philo->data->eat_sem);
 	philo->last_time = ft_get_time();
-	pthread_mutex_unlock(&philo->data->eat_mutex);
+	sem_post(philo->data->eat_sem);
 	usleep_interval(philo->data->eat_time);
 	ft_print_format(philo, "is sleeping");
-	pthread_mutex_unlock(&philo->data->forks[philo->right]);
+	sem_post(philo->data->forks);
 }
 
-void	*ft_thread(void *arg)
+void	ft_thread(t_philo *philo)
 {
-	t_philo			*philo;
-
-	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
 		usleep_interval(5);
 	while (1)
 	{
-		pthread_mutex_lock(&philo->data->m_mutex);
+		sem_wait(philo->data->m_sem);
 		if (philo->data->monitor)
 		{
-			pthread_mutex_unlock(&philo->data->m_mutex);
+			sem_post(philo->data->m_sem);
 			break ;
 		}
-		pthread_mutex_unlock(&philo->data->m_mutex);
-		pthread_mutex_lock(&philo->data->forks[philo->left]);
+		sem_post(philo->data->m_sem);
+		sem_wait(philo->data->forks);
 		ft_print_format(philo, "has taken a fork");
 		thread_logic(philo);
-		pthread_mutex_unlock(&philo->data->forks[philo->left]);
+		sem_post(philo->data->forks);
 		usleep_interval(philo->data->sleep_time);
 		ft_print_format(philo, "is thinking");
 	}
-	return (arg);
 }
 
 int	ft_philo_init(t_philo *philo, int id)
 {
 	philo->id = id + 1;
-	philo->left = id;
-	philo->right = (id + 1) % philo->data->philo_num;
 	philo->eat_cnt = 0;
-	if (pthread_create(&philo->thread, 0, ft_thread, philo) != 0)
+	philo->thread = fork();
+	if (philo->thread == -1)
 		return (0);
+	if (philo->thread == 0)
+		ft_thread(philo);
 	return (1);
 }
 
@@ -87,6 +84,6 @@ int	run_philo(t_data *data, t_philo *philos)
 	check_die(data, philos);
 	i = -1;
 	while (++i < data->philo_num)
-		pthread_join(philos[i].thread, 0);
+		waitpid(philos[i].thread, 0, 0);
 	return (1);
 }
