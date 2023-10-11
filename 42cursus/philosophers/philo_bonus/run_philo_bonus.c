@@ -6,7 +6,7 @@
 /*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:16:43 by isang-yun         #+#    #+#             */
-/*   Updated: 2023/10/11 00:59:57 by isang-yun        ###   ########.fr       */
+/*   Updated: 2023/10/11 15:54:42 by isang-yun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,6 @@ int	run_philo(t_data *data, t_philo *philos)
 	check_die(data, philos);
 	i = -1;
 	while (++i < data->philo_num)
-		waitpid(philos[i].thread, 0, 0);
+		printf("%d %d\n", waitpid(philos[i].thread, 0, 0), philos[i].thread);
 	return (1);
 }
