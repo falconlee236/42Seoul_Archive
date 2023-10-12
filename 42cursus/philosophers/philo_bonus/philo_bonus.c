@@ -6,7 +6,7 @@
 /*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 13:44:11 by sangylee          #+#    #+#             */
-/*   Updated: 2023/10/12 18:28:25 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/10/12 19:27:14 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	main(int ac, char **av)
 
 	if (ac < 5 || ac > 6 || !philo_init(&data, ac, av))
 		return (0);
-	pid_arr = (pid_t *)malloc(sizeof(pid_t) * data.philo_num);
+	pid_arr = (pid_t *)malloc(sizeof(pid_t) * (data.philo_num));
 	if (pid_arr)
 	{
 		if (run_philo(&data, pid_arr) == 0)
@@ -111,5 +111,4 @@ int	main(int ac, char **av)
 	sem_close(data.eat_cnt_sem);
 	sem_close(data.forks);
 	exit(0);
-	return (0);
 }

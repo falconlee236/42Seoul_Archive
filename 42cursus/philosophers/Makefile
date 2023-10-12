@@ -9,8 +9,6 @@ bonus:
 clean:
 	$(MAKE) -C philo clean
 	$(MAKE) -C philo_bonus clean
-	rm -f mandatory
-	rm -f bonus
 
 fclean: clean
 	$(MAKE) -C philo fclean

@@ -6,7 +6,7 @@
 /*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 14:03:37 by isang-yun         #+#    #+#             */
-/*   Updated: 2023/10/12 17:24:57 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/10/12 19:06:25 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	*check_die(void *args)
 			exit(1);
 		}
 		sem_post(philo->data->eat_sem);
+		usleep(1000);
 	}
 }
 
