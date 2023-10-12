@@ -6,7 +6,7 @@
 /*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 14:03:37 by isang-yun         #+#    #+#             */
-/*   Updated: 2023/10/12 12:38:20 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/10/12 17:24:57 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,36 +37,25 @@ int	check_eat(t_data *data)
 	return (0);
 }
 
-void	check_die(t_data *data, t_philo *philos)
+void	*check_die(void *args)
 {
-	int	i;
-	int	flag;
+	t_philo	*philo;
 
-	flag = 0;
-	while (!flag)
+	philo = (t_philo *)args;
+	while (1)
 	{
-		i = -1;
-		if (check_eat(data) == 1)
-			return ;
-		while (++i < data->philo_num)
+		sem_wait(philo->data->eat_sem);
+		if (ft_get_time() - philo->last_time >= philo->data->die_time)
 		{
-			sem_wait(data->eat_sem);
-			if (ft_get_time() - philos[i].last_time >= data->die_time)
-			{
-				ft_print_format(&philos[i], "died");
-				sem_wait(data->m_sem);
-				data->monitor = 1;
-				flag = 1;
-				sem_post(data->m_sem);
-				sem_post(data->eat_sem);
-				break ;
-			}
-			sem_post(data->eat_sem);
+			ft_print_format(philo, "died");
+			sem_wait(philo->data->m_sem);
+			philo->data->monitor = 1;
+			sem_post(philo->data->m_sem);
+			sem_post(philo->data->eat_sem);
+			exit(1);
 		}
+		sem_post(philo->data->eat_sem);
 	}
-	i = -1;
-	while (++i < data->philo_num)
-		kill(philos[i].pid, SIGKILL);
 }
 
 void	usleep_interval(long long t)

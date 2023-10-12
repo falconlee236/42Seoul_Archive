@@ -6,7 +6,7 @@
 /*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 13:44:11 by sangylee          #+#    #+#             */
-/*   Updated: 2023/10/12 13:10:40 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/10/12 18:28:25 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,10 @@ int	ft_atoi(const char *str, int *f)
 
 int	ft_sem_init(t_data *data)
 {
+	sem_unlink("forks");
+	sem_unlink("monitor");
+	sem_unlink("eat");
+	sem_unlink("ean_cnt");
 	data->forks = sem_open("forks", O_CREAT, 0644, data->philo_num);
 	data->m_sem = sem_open("monitor", O_CREAT, 0644, 1);
 	data->eat_sem = sem_open("eat", O_CREAT, 0644, 1);
@@ -89,31 +93,23 @@ int	philo_init(t_data *data, int ac, char **av)
 int	main(int ac, char **av)
 {
 	t_data	data;
-	t_philo	*philos;
+	pid_t	*pid_arr;
 
 	if (ac < 5 || ac > 6 || !philo_init(&data, ac, av))
 		return (0);
-	philos = (t_philo *)malloc(sizeof(t_philo) * data.philo_num);
-	if (!philos)
-		return (sem_close(data.forks));
-	printf("%d\n", data.philo_num);
-	sem_wait(data.forks);
-	printf("1\n");
-	sem_wait(data.forks);
-	printf("2\n");
-	sem_wait(data.forks);
-	printf("3\n");
-	sem_wait(data.forks);
-	printf("4\n");
-	sem_wait(data.forks);
-	printf("5\n");
-	sem_wait(data.forks);
-	printf("6\n");
-	run_philo(&data, philos);
+	pid_arr = (pid_t *)malloc(sizeof(pid_t) * data.philo_num);
+	if (pid_arr)
+	{
+		if (run_philo(&data, pid_arr) == 0)
+		{
+			printf("fork error!\n");
+			exit(0);
+		}
+	}
 	sem_close(data.m_sem);
 	sem_close(data.eat_sem);
 	sem_close(data.eat_cnt_sem);
 	sem_close(data.forks);
-	free(philos);
+	exit(0);
 	return (0);
 }

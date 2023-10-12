@@ -6,7 +6,7 @@
 /*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 14:04:52 by sangylee          #+#    #+#             */
-/*   Updated: 2023/10/12 12:35:37 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/10/12 18:24:28 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ typedef struct s_philo
 {
 	pid_t		pid;
 	int			id;
-	int			left;
-	int			right;
 	int			eat_cnt;
 	long long	init_time;
 	long long	last_time;
@@ -51,10 +49,9 @@ typedef struct s_philo
 	t_data		*data;
 }	t_philo;
 
-int			run_philo(t_data *data, t_philo *philos);
-
+int			run_philo(t_data *data, pid_t *pid_arr);
+void		*check_die(void *args);
 long long	ft_get_time(void);
-void		check_die(t_data *data, t_philo *philos);
 void		usleep_interval(long long t);
 void		ft_print_format(t_philo *philo, char *format);
 #endif
