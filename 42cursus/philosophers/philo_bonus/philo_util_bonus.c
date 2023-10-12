@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_util_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
+/*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 14:03:37 by isang-yun         #+#    #+#             */
-/*   Updated: 2023/10/11 01:06:58 by isang-yun        ###   ########.fr       */
+/*   Updated: 2023/10/12 12:38:20 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,9 @@ void	check_die(t_data *data, t_philo *philos)
 			sem_post(data->eat_sem);
 		}
 	}
+	i = -1;
+	while (++i < data->philo_num)
+		kill(philos[i].pid, SIGKILL);
 }
 
 void	usleep_interval(long long t)

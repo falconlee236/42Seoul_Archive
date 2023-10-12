@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
+/*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 13:44:11 by sangylee          #+#    #+#             */
-/*   Updated: 2023/10/11 15:33:55 by isang-yun        ###   ########.fr       */
+/*   Updated: 2023/10/12 13:10:40 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	philo_init(t_data *data, int ac, char **av)
 		return (0);
 	if (data->philo_num == 1)
 		return (case_one(data));
-	if (!data->forks || !ft_sem_init(data))
+	if (!ft_sem_init(data))
 		return (0);
 	return (1);
 }
@@ -96,6 +96,19 @@ int	main(int ac, char **av)
 	philos = (t_philo *)malloc(sizeof(t_philo) * data.philo_num);
 	if (!philos)
 		return (sem_close(data.forks));
+	printf("%d\n", data.philo_num);
+	sem_wait(data.forks);
+	printf("1\n");
+	sem_wait(data.forks);
+	printf("2\n");
+	sem_wait(data.forks);
+	printf("3\n");
+	sem_wait(data.forks);
+	printf("4\n");
+	sem_wait(data.forks);
+	printf("5\n");
+	sem_wait(data.forks);
+	printf("6\n");
 	run_philo(&data, philos);
 	sem_close(data.m_sem);
 	sem_close(data.eat_sem);

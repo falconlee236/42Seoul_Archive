@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
+/*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 14:04:52 by sangylee          #+#    #+#             */
-/*   Updated: 2023/10/11 00:51:25 by isang-yun        ###   ########.fr       */
+/*   Updated: 2023/10/12 12:35:37 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,14 @@ typedef struct s_data
 
 typedef struct s_philo
 {
+	pid_t		pid;
 	int			id;
 	int			left;
 	int			right;
 	int			eat_cnt;
 	long long	init_time;
 	long long	last_time;
-	pid_t		thread;
+	pthread_t	thread;
 	t_data		*data;
 }	t_philo;
 

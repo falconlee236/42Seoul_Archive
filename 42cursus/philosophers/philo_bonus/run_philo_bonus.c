@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_philo_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
+/*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:16:43 by isang-yun         #+#    #+#             */
-/*   Updated: 2023/10/11 15:54:42 by isang-yun        ###   ########.fr       */
+/*   Updated: 2023/10/12 12:59:00 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	ft_thread(t_philo *philo)
 			break ;
 		}
 		sem_post(philo->data->m_sem);
+		printf("!!!\n");
 		sem_wait(philo->data->forks);
 		ft_print_format(philo, "has taken a fork");
 		thread_logic(philo);
@@ -58,11 +59,16 @@ int	ft_philo_init(t_philo *philo, int id)
 {
 	philo->id = id + 1;
 	philo->eat_cnt = 0;
-	philo->thread = fork();
-	if (philo->thread == -1)
+	philo->pid = fork();
+	if (philo->pid == -1)
 		return (0);
-	if (philo->thread == 0)
+	if (philo->pid == 0)
+	{
+		// if (pthread_create(&philo->thread, 0, ft_thread, philo) != 0)
+		// 	return (0);
+		printf("!\n");
 		ft_thread(philo);
+	}
 	return (1);
 }
 
@@ -73,6 +79,19 @@ int	run_philo(t_data *data, t_philo *philos)
 
 	i = -1;
 	init_time = ft_get_time();
+	printf("0\n");
+	sem_wait(data->forks);
+	printf("1\n");
+	sem_wait(data->forks);
+	printf("2\n");
+	sem_wait(data->forks);
+	printf("3\n");
+	sem_wait(data->forks);
+	printf("4\n");
+	sem_wait(data->forks);
+	printf("5\n");
+	sem_wait(data->forks);
+	printf("6\n");
 	while (++i < data->philo_num)
 	{
 		philos[i].data = data;
@@ -82,8 +101,8 @@ int	run_philo(t_data *data, t_philo *philos)
 			return (0);
 	}
 	check_die(data, philos);
-	i = -1;
-	while (++i < data->philo_num)
-		printf("%d %d\n", waitpid(philos[i].thread, 0, 0), philos[i].thread);
+	// i = -1;
+	// while (++i < data->philo_num)
+	// 	printf("%d %d!!\n", waitpid(philos[i].thread, 0, 0), philos[i].thread);
 	return (1);
 }
