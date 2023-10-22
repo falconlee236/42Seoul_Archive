@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_philo_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:16:43 by isang-yun         #+#    #+#             */
-/*   Updated: 2023/10/12 19:26:39 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/10/22 20:52:15 by isang-yun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	ft_thread(t_philo *philo)
 		sem_post(philo->data->m_sem);
 		sem_wait(philo->data->forks);
 		ft_print_format(philo, "has taken a fork");
-		thread_logic(philo);
 		sem_post(philo->data->forks);
+		thread_logic(philo);
 		if (philo->eat_cnt == philo->data->must_eat)
 			exit(0);
 		ft_print_format(philo, "is sleeping");
