@@ -6,7 +6,7 @@
 /*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 13:44:11 by sangylee          #+#    #+#             */
-/*   Updated: 2023/10/22 12:51:54 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/10/12 19:27:14 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,12 @@ int	ft_sem_init(t_data *data)
 	sem_unlink("monitor");
 	sem_unlink("eat");
 	sem_unlink("ean_cnt");
-	sem_unlink("print");
 	data->forks = sem_open("forks", O_CREAT, 0644, data->philo_num);
 	data->m_sem = sem_open("monitor", O_CREAT, 0644, 1);
 	data->eat_sem = sem_open("eat", O_CREAT, 0644, 1);
 	data->eat_cnt_sem = sem_open("eat_count", O_CREAT, 0644, 1);
-	data->print_sem = sem_open("print", O_CREAT, 0644, 1);
 	if (data->forks == SEM_FAILED || data->m_sem == SEM_FAILED
-		|| data->eat_sem == SEM_FAILED || data->eat_cnt_sem == SEM_FAILED
-		|| data->print_sem == SEM_FAILED)
+		|| data->eat_sem == SEM_FAILED || data->eat_cnt_sem == SEM_FAILED)
 		return (0);
 	return (1);
 }
@@ -113,6 +110,5 @@ int	main(int ac, char **av)
 	sem_close(data.eat_sem);
 	sem_close(data.eat_cnt_sem);
 	sem_close(data.forks);
-	sem_close(data.print_sem);
 	exit(0);
 }

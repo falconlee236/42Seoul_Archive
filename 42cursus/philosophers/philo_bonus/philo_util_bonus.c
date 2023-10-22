@@ -6,7 +6,7 @@
 /*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 14:03:37 by isang-yun         #+#    #+#             */
-/*   Updated: 2023/10/22 12:52:27 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/10/14 21:31:20 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ void	ft_print_format(t_philo *philo, char *format)
 {
 	long long	timestamp;
 
-	sem_wait(philo->data->print_sem);
 	timestamp = ft_get_time() - philo->init_time;
 	sem_wait(philo->data->m_sem);
 	if (philo->data->monitor)
@@ -80,8 +79,7 @@ void	ft_print_format(t_philo *philo, char *format)
 		sem_post(philo->data->m_sem);
 		return ;
 	}
-	sem_post(philo->data->m_sem);
 	printf("\033[0;3%dm%lld %d %s\n\033[0m",
 		philo->id % 8, timestamp, philo->id, format);
-	sem_post(philo->data->print_sem);
+	sem_post(philo->data->m_sem);
 }

@@ -6,7 +6,7 @@
 /*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 14:04:52 by sangylee          #+#    #+#             */
-/*   Updated: 2023/10/22 12:51:18 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/10/12 18:24:28 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ typedef struct s_data
 	sem_t	*m_sem;
 	sem_t	*eat_sem;
 	sem_t	*eat_cnt_sem;
-	sem_t	*print_sem;
 }	t_data;
 
 typedef struct s_philo
