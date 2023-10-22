@@ -6,7 +6,7 @@
 /*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 14:04:52 by sangylee          #+#    #+#             */
-/*   Updated: 2023/10/22 19:51:42 by isang-yun        ###   ########.fr       */
+/*   Updated: 2023/10/22 20:16:28 by isang-yun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_data
 	sem_t	*eat_sem;
 	sem_t	*eat_cnt_sem;
 	sem_t	*print_sem;
+	sem_t	*time_sem;
 }	t_data;
 
 typedef struct s_philo

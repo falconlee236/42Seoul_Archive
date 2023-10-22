@@ -6,7 +6,7 @@
 /*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 14:03:37 by isang-yun         #+#    #+#             */
-/*   Updated: 2023/10/22 19:55:17 by isang-yun        ###   ########.fr       */
+/*   Updated: 2023/10/22 20:18:09 by isang-yun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,17 +72,19 @@ void	ft_print_format(t_philo *philo, char *format)
 {
 	long long	timestamp;
 
-	sem_wait(philo->data->print_sem);
+	sem_wait(philo->data->time_sem);
 	timestamp = ft_get_time() - philo->init_time;
 	sem_wait(philo->data->m_sem);
 	if (philo->data->monitor)
 	{
 		sem_post(philo->data->m_sem);
-		sem_post(philo->data->print_sem);
+		sem_post(philo->data->time_sem);
 		return ;
 	}
 	sem_post(philo->data->m_sem);
+	sem_wait(philo->data->print_sem);
 	printf("\033[0;3%dm%lld %d %s\n\033[0m",
 		philo->id % 8, timestamp, philo->id, format);
 	sem_post(philo->data->print_sem);
+	sem_post(philo->data->time_sem);
 }
