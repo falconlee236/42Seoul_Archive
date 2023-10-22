@@ -6,7 +6,7 @@
 /*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 19:12:39 by sangylee          #+#    #+#             */
-/*   Updated: 2023/10/05 18:30:30 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/10/22 13:03:02 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_data
 	pthread_mutex_t	m_mutex;
 	pthread_mutex_t	eat_mutex;
 	pthread_mutex_t	eat_cnt_mutex;
+	pthread_mutex_t	print_mutex;
 }	t_data;
 
 typedef struct s_philo
