@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
+/*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 13:44:11 by sangylee          #+#    #+#             */
-/*   Updated: 2023/10/11 15:36:11 by isang-yun        ###   ########.fr       */
+/*   Updated: 2023/10/22 13:18:09 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo.h" //@todo 시간문제 해결하기 thinking에서 1초가 더 오래걸림
 
 int	ft_atoi(const char *str, int *f)
 {
