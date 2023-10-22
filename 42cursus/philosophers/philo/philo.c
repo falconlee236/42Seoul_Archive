@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
+/*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 13:44:11 by sangylee          #+#    #+#             */
-/*   Updated: 2023/10/11 15:36:11 by isang-yun        ###   ########.fr       */
+/*   Updated: 2023/10/22 12:37:31 by sangylee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ int	ft_mutex_init(t_data *data)
 	}
 	if ((pthread_mutex_init(&data->m_mutex, 0) != 0)
 		|| (pthread_mutex_init(&data->eat_mutex, 0) != 0)
-		|| (pthread_mutex_init(&data->eat_cnt_mutex, 0) != 0))
+		|| (pthread_mutex_init(&data->eat_cnt_mutex, 0) != 0)
+		|| (pthread_mutex_init(&data->print_mutex, 0) != 0))
 	{
 		free(data->forks);
 		return (0);
