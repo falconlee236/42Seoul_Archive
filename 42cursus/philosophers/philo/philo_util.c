@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_util.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sangylee <sangylee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 14:03:37 by isang-yun         #+#    #+#             */
-/*   Updated: 2023/10/14 21:32:42 by sangylee         ###   ########.fr       */
+/*   Updated: 2023/10/22 19:48:50 by isang-yun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,14 +79,17 @@ void	ft_print_format(t_philo *philo, char *format)
 {
 	long long	timestamp;
 
+	pthread_mutex_lock(&philo->data->print_mutex);
 	timestamp = ft_get_time() - philo->init_time;
 	pthread_mutex_lock(&philo->data->m_mutex);
 	if (philo->data->monitor)
 	{
 		pthread_mutex_unlock(&philo->data->m_mutex);
+		pthread_mutex_unlock(&philo->data->print_mutex);
 		return ;
 	}
+	pthread_mutex_unlock(&philo->data->m_mutex);
 	printf("\033[0;3%dm%lld %d %s\n\033[0m",
 		philo->id % 8, timestamp, philo->id, format);
-	pthread_mutex_unlock(&philo->data->m_mutex);
+	pthread_mutex_unlock(&philo->data->print_mutex);
 }
