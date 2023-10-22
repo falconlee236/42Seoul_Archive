@@ -6,7 +6,7 @@
 /*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 19:12:39 by sangylee          #+#    #+#             */
-/*   Updated: 2023/10/22 19:40:27 by isang-yun        ###   ########.fr       */
+/*   Updated: 2023/10/22 20:10:59 by isang-yun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_data
 	pthread_mutex_t	m_mutex;
 	pthread_mutex_t	eat_mutex;
 	pthread_mutex_t	eat_cnt_mutex;
+	pthread_mutex_t	time_mutex;
 	pthread_mutex_t	print_mutex;
 }	t_data;
 

@@ -6,7 +6,7 @@
 /*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 13:44:11 by sangylee          #+#    #+#             */
-/*   Updated: 2023/10/22 19:41:51 by isang-yun        ###   ########.fr       */
+/*   Updated: 2023/10/22 20:11:19 by isang-yun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ int	ft_mutex_init(t_data *data)
 	if ((pthread_mutex_init(&data->m_mutex, 0) != 0)
 		|| (pthread_mutex_init(&data->eat_mutex, 0) != 0)
 		|| (pthread_mutex_init(&data->eat_cnt_mutex, 0) != 0)
-		|| (pthread_mutex_init(&data->print_mutex, 0) != 0))
+		|| (pthread_mutex_init(&data->print_mutex, 0) != 0)
+		|| (pthread_mutex_init(&data->time_mutex, 0) != 0))
 	{
 		free(data->forks);
 		return (0);
@@ -124,4 +125,5 @@ int	main(int ac, char **av)
 	pthread_mutex_destroy(&data.eat_mutex);
 	pthread_mutex_destroy(&data.eat_cnt_mutex);
 	pthread_mutex_destroy(&data.print_mutex);
+	pthread_mutex_destroy(&data.time_mutex);
 }
