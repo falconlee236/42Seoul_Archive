@@ -6,7 +6,7 @@
 /*   By: isang-yun <isang-yun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 00:16:43 by isang-yun         #+#    #+#             */
-/*   Updated: 2023/10/22 19:49:07 by isang-yun        ###   ########.fr       */
+/*   Updated: 2023/10/22 20:57:23 by isang-yun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void	*ft_thread(void *arg)
 		pthread_mutex_unlock(&philo->data->m_mutex);
 		pthread_mutex_lock(&philo->data->forks[philo->left]);
 		ft_print_format(philo, "has taken a fork");
-		thread_logic(philo);
 		pthread_mutex_unlock(&philo->data->forks[philo->left]);
+		thread_logic(philo);
 		usleep_interval(philo->data->sleep_time);
 		ft_print_format(philo, "is thinking");
 	}
