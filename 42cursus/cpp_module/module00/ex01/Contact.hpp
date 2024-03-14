@@ -73,4 +73,39 @@ void Contact::display_contact(std::string index){
     std::cout << " | ";
     std::cout << "\n";
 }
+
+void Contact::display_record(std::string index){
+    std::cout << " | ";
+    if (index.length() > 10)
+        std::cout << std::setw(10) << std::right << index.substr(0, 9) << ".";
+    else
+        std::cout << std::setw(10) << std::right << index;
+    std::cout << " | ";
+    if (this->first_name.length() > 10)
+        std::cout << std::setw(10) << std::right << this->first_name.substr(0, 9) << ".";
+    else
+        std::cout << std::setw(10) << std::right << this->first_name;
+    std::cout << " | ";
+    if (this->last_name.length() > 10)
+        std::cout << std::setw(10) << std::right << this->last_name.substr(0, 9) << ".";
+    else
+        std::cout << std::setw(10) << std::right << this->last_name;
+    std::cout << " | ";
+    if (this->nick_name.length() > 10)
+        std::cout << std::setw(10) << std::right << this->nick_name.substr(0, 9) << ".";
+    else
+        std::cout << std::setw(10) << std::right << this->nick_name;
+    std::cout << " | ";
+    if (this->phone_number.length() > 10)
+        std::cout << std::setw(10) << std::right << this->phone_number.substr(0, 9) << ".";
+    else
+        std::cout << std::setw(10) << std::right << this->phone_number;
+    std::cout << " | ";
+    if (this->darkest_secret.length() > 10)
+        std::cout << std::setw(10) << std::right << this->darkest_secret.substr(0, 9) << ".";
+    else
+        std::cout << std::setw(10) << std::right << this->darkest_secret;
+    std::cout << " | ";
+    std::cout << "\n";
+}
 #endif

@@ -16,7 +16,7 @@ public:
 };
 
 
-void print_header(void){
+void print_header(bool flag){
     std::cout << " | ";
     std::cout << std::setw(10) << std::right << "index";
     std::cout << " | ";
@@ -25,6 +25,12 @@ void print_header(void){
     std::cout << std::setw(10) << std::right << "last name";
     std::cout << " | ";
     std::cout << std::setw(10) << std::right << "nick name";
+    if (flag){
+        std::cout << " | ";
+        std::cout << std::setw(10) << std::right << "p_number";
+        std::cout << " | ";
+        std::cout << std::setw(10) << std::right << "d_secret";
+    }
     std::cout << " | \n";
 }
 PhoneBook::PhoneBook(){
@@ -47,7 +53,7 @@ void PhoneBook::add_phonebook(void){
 }
 
 void PhoneBook::search_phonebook(void){
-    print_header();
+    print_header(false);
     std::stringstream ss;
     for(int i = 0; i < 8; i++){
         std::string num_str;
@@ -75,9 +81,9 @@ void PhoneBook::search_phonebook(void){
         std::cout << "invalid argument\n";
         return;
     }
-    print_header();
+    print_header(true);
     ss << index;
     ss >> num_index;
-    contacts[num_index].display_contact(index);
+    contacts[num_index].display_record(index);
 }
 #endif
