@@ -8,10 +8,10 @@ OBJS = $(SRCS:.cpp=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CPPC) $(CPPFLAGS) $< -o $@
+	$(CPPC) $(CPPFLAGS) $^ -o $@
 
 %.o: %.cpp
-	$(CPPC) $(CPPFLAGS) -c $^ -o $@
+	$(CPPC) $(CPPFLAGS) -c $< -o $@
 
 clean:
 	rm -rf $(OBJS)
@@ -21,4 +21,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all re fclean clean
+.PHONY: all re clean fclean
