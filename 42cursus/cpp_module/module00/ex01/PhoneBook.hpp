@@ -49,7 +49,7 @@ void PhoneBook::search_phonebook(void){
     std::cout << "input need to showing record index: ";
     std::cin >> index;
     try{
-        if (std::stoll(index) > 7){
+        if (std::stoll(index) > 7 || std::stoll(index) < 0 || index.find(".") != std::string::npos){
             std::cout << "index out of index\n";
             return;
         }
