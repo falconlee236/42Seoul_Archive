@@ -1,5 +1,5 @@
 CPPC = c++
-CPPFLAGS = -Wall -Wextra -Werror -std=c++98 -g
+CPPFLAGS = -Wall -Wextra -Werror -std=c++98
 
 NAME = phone
 SRCS = main.cpp
