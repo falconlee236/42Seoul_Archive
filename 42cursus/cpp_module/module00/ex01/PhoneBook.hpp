@@ -42,11 +42,16 @@ void PhoneBook::search_phonebook(void){
     std::cout << " | \n";
     for(int i = 0; i < 8; i++)
         contacts[i].display_contact(std::to_string(i));
-    int index;
+    std::string index;
     std::cout << "input need to showing record index: ";
     std::cin >> index;
-    if (index > 7){
-        std::cout << "index out of index\n";
+    try{
+        if (std::stoll(index) > 7){
+            std::cout << "index out of index\n";
+            return;
+        }
+    }catch(std::invalid_argument){
+        std::cout << "invalid argument\n";
         return;
     }
     std::cout << " | ";
@@ -58,5 +63,5 @@ void PhoneBook::search_phonebook(void){
     std::cout << " | ";
     std::cout << std::setw(10) << std::right << "nick name";
     std::cout << " | \n";
-    contacts[index].display_contact(std::to_string(index));
+    contacts[std::stoll(index)].display_contact(index);
 }
