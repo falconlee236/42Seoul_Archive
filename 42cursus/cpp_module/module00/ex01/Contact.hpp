@@ -18,6 +18,7 @@ public:
         std::string darkest_secret);
     void display_contact(std::string index);
     void display_record(std::string index);
+    bool check_null(void);
 };
 
 Contact::Contact(){
@@ -36,6 +37,13 @@ Contact::Contact(
     this->nick_name = nick_name;
     this->phone_number = phone_number;
     this->darkest_secret = darkest_secret;
+}
+
+bool Contact::check_null(void){
+    if (this->first_name == "" || this->last_name == "" || this->nick_name == "" ||
+        this->phone_number == "" || this->darkest_secret == "")
+        return true;
+    return false;
 }
 
 void Contact::display_contact(std::string index){
