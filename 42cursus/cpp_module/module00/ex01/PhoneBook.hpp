@@ -1,3 +1,6 @@
+#ifndef __PHONEBOOK_H__
+#define __PHONEBOOK_H__
+
 #include "Contact.hpp"
 #include <string>
 
@@ -65,3 +68,4 @@ void PhoneBook::search_phonebook(void){
     std::cout << " | \n";
     contacts[std::stoll(index)].display_contact(index);
 }
+#endif
