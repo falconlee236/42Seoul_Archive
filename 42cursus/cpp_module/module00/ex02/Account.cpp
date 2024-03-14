@@ -2,6 +2,11 @@
 #include <iostream>
 #include <ctime>
 
+int	Account::_nbAccounts;
+int	Account::_totalAmount;
+int	Account::_totalNbDeposits;
+int	Account::_totalNbWithdrawals;
+
 int	Account::getNbAccounts(void){return _nbAccounts;}
 int	Account::getTotalAmount(void){return _totalAmount;}
 int	Account::getNbDeposits(void){return _totalNbDeposits;}
@@ -45,6 +50,17 @@ Account::Account(int initial_deposit){
     std::cout << ";created\n";
 }
 
+Account::~Account(void){
+    this->_nbAccounts--;
+    _totalAmount -= this->_amount;
+    _totalNbDeposits -= this->_nbDeposits;
+    _totalNbWithdrawals -= this->_nbWithdrawals;
+    _displayTimestamp();
+    std::cout << "index:" << this->_accountIndex;
+    std::cout << ";amount:" << this->_amount;
+    std::cout << ";closed\n";
+}
+
 void Account::makeDeposit(int deposit){
     _totalNbDeposits++;
     this->_nbDeposits++;
@@ -55,15 +71,33 @@ void Account::makeDeposit(int deposit){
     std::cout << ";p_amount:" << this->_amount - deposit;
     std::cout << ";deposits:" << deposit;
     std::cout << ";amount:" << this->_amount;
-    std::cout << ";nb_deposits:" << this->_nbDeposits;
+    std::cout << ";nb_deposits:" << this->_nbDeposits << "\n";
 }
 
 bool Account::makeWithdrawal(int withdrawal){
-
+    _displayTimestamp();
+    std::cout << "index:" << this->_accountIndex;
+    std::cout << ";p_amount:" << this->_amount;
+    this->_amount -= withdrawal;
+    if (!checkAmount()){
+        this->_amount += withdrawal;
+        std::cout << ";withdrawal:refused\n";
+        return false;
+    }
+    else{
+        _totalNbWithdrawals++;
+        this->_nbWithdrawals++;
+        this->_totalAmount -= withdrawal;
+        std::cout << ";withdrawal:" << withdrawal;
+        std::cout << ";amount:" << this->_amount;
+        std::cout << ";nb_withdrawals:" << this->_nbWithdrawals << "\n";
+        return true;
+    }
 }
+
 int Account::checkAmount(void) const{
-
+    if (this->_amount < 0)
+        return 0;
+    return 1;
 }
-Account::~Account(void){
 
-}
