@@ -1,5 +1,7 @@
 #include "Zombie.hpp"
 
+void announce(void);
+
 Zombie::Zombie(std::string name){
     this->name = name;
 }
