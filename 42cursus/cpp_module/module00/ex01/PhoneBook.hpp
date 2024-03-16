@@ -39,11 +39,11 @@ PhoneBook::PhoneBook(){
 
 void PhoneBook::add_phonebook(void){
     std::string f_name, l_name, n_name, p_number, d_secret;
-	std::cout << "Enter the first name: "; std::cin >> f_name;
-	std::cout << "Enter the last name: "; std::cin >> l_name;
-	std::cout << "Enter the nick name: "; std::cin >> n_name;
-	std::cout << "Enter the phone number: "; std::cin >> p_number;
-	std::cout << "Enter the darkest secret: "; std::cin >> d_secret;
+	std::cout << "Enter the first name: "; std::getline(std::cin, f_name);
+	std::cout << "Enter the last name: "; std::getline(std::cin, l_name);
+	std::cout << "Enter the nick name: "; std::getline(std::cin, n_name);
+	std::cout << "Enter the phone number: "; std::getline(std::cin, p_number);
+	std::cout << "Enter the darkest secret: "; std::getline(std::cin, d_secret);
 	Contact record = Contact(f_name, l_name, n_name, p_number, d_secret);
     if (record.check_null()){
         std::cout << "Do not leave element blanked\n";
@@ -67,23 +67,24 @@ void PhoneBook::search_phonebook(void){
     std::cout << "input need to showing record index: ";
     std::cin >> index;
     int num_index;
-    try{
-        ss << index;
-        ss >> num_index;
-        ss.str("");
-        ss.clear();
-        if (num_index > 7 || num_index < 0 
-            || index.find(".") != std::string::npos || (num_index == 0 && index[0] != '0')){
-            std::cout << "index out of index\n";
-            return;
-        }
-    }catch(std::invalid_argument){
+    ss << index;
+    ss >> num_index;
+    ss.str(""); ss.clear();
+    std::string num_index_string;
+    ss << num_index;
+    ss >> num_index_string;
+    ss.str(""); ss.clear();
+    if (num_index > 7 || num_index < 0 
+        || index.find(".") != std::string::npos 
+        || (num_index == 0 && index[0] != '0')
+        || num_index_string.length() != index.length()){
         std::cout << "invalid argument\n";
         return;
     }
     print_header(true);
     ss << index;
     ss >> num_index;
+    ss.str(""); ss.clear();
     contacts[num_index].display_record(index);
 }
 #endif
