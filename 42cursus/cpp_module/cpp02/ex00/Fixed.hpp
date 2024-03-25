@@ -15,7 +15,7 @@ public:
     Fixed& operator= (const Fixed& fixed);
     //destructor
     ~Fixed();
-    const int getRawBits(void);
-    void setRawBits(const int raw);
+    int getRawBits(void) const;
+    void setRawBits(int const raw);
 };
 #endif
