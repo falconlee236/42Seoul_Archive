@@ -34,7 +34,7 @@ Fixed::Fixed(const int value){
 }
 
 Fixed::Fixed(const float value){
-    std::cout << "float constructor called\n";
+    std::cout << "Float constructor called\n";
     this->value = roundf(value * (1 << this->frac_bit));
 }
 
@@ -46,4 +46,7 @@ float Fixed::toFloat(void) const{
     return ((float)this->value / (1 << this->frac_bit));
 }
 // insertion operator overload
-std::ostream& operator<< (std::ostream& os, const Fixed& fixed);
+std::ostream& operator<< (std::ostream& os, const Fixed& fixed){
+    os << fixed.toFloat();
+    return os;
+}

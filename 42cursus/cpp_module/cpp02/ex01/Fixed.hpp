@@ -25,4 +25,6 @@ public:
     float toFloat(void) const; //ex01
     int toInt(void) const; //ex01
 };
+
+std::ostream& operator<<(std::ostream&os, const Fixed &fixed);
 #endif
