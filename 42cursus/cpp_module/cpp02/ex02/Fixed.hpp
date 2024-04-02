@@ -25,12 +25,12 @@ public:
     //!SECTION
 
     //SECTION - ex02
-    bool operator> (const Fixed& fixed); //ex02
-    bool operator< (const Fixed& fixed); //ex02
-    bool operator>= (const Fixed& fixed); //ex02
-    bool operator<= (const Fixed& fixed); //ex02
-    bool operator== (const Fixed& fixed); //ex02
-    bool operator!= (const Fixed& fixed); //ex02
+    bool operator> (const Fixed& fixed) const; //ex02
+    bool operator< (const Fixed& fixed) const; //ex02
+    bool operator>= (const Fixed& fixed) const; //ex02
+    bool operator<= (const Fixed& fixed) const; //ex02
+    bool operator== (const Fixed& fixed) const; //ex02
+    bool operator!= (const Fixed& fixed) const; //ex02
 
     const Fixed operator+ (const Fixed& fixed) const; //ex02
     const Fixed operator- (const Fixed& fixed) const; //ex02
@@ -43,9 +43,9 @@ public:
     const Fixed operator-- (int);
 
     static Fixed& max(Fixed& first, Fixed& second);
-    static Fixed& max(const Fixed& first, const Fixed& second);
+    static const Fixed& max(const Fixed& first, const Fixed& second);
     static Fixed& min(Fixed& first, Fixed& second);
-    static Fixed& min(const Fixed& first, const Fixed& second);
+    static const Fixed& min(const Fixed& first, const Fixed& second);
     //!SECTION
 };
 

@@ -1,24 +1,21 @@
 #include "Fixed.hpp"
 
 Fixed::Fixed(){
-    std::cout << "Default constructor called\n";
     this->value = 0;
 }
 
 Fixed::Fixed(const Fixed& fixed){
-    std::cout << "Copy constructor called\n";
     this->value = fixed.getRawBits();
 }
 
 Fixed& Fixed::operator= (const Fixed& fixed){
-    std::cout << "Copy assign operator called\n";
     if (this != &fixed){
         this->value = fixed.getRawBits();
     }
     return (*this);
 }
 Fixed::~Fixed(){
-    std::cout << "Destructor called\n";
+
 }
 int Fixed::getRawBits(void) const {
     return this->value;
@@ -29,12 +26,10 @@ void Fixed::setRawBits(int const raw){
 
 //ex01
 Fixed::Fixed(const int value){
-    std::cout << "Int constructor called\n";
     this->value = value << this->frac_bit;
 }
 
 Fixed::Fixed(const float value){
-    std::cout << "Float constructor called\n";
     this->value = roundf(value * (1 << this->frac_bit));
 }
 
@@ -52,22 +47,23 @@ std::ostream& operator<< (std::ostream& os, const Fixed& fixed){
 }
 
 //ANCHOR - ex02
-bool Fixed::operator> (const Fixed& fixed){
+bool Fixed::operator> (const Fixed& fixed) const {
     return this->getRawBits() > fixed.getRawBits();
 }
-bool Fixed::operator< (const Fixed& fixed){
+bool Fixed::operator< (const Fixed& fixed) const {
     return this->getRawBits() < fixed.getRawBits();
 }
-bool Fixed::operator>= (const Fixed& fixed){
+bool Fixed::operator>= (const Fixed& fixed) const {
     return this->getRawBits() >= fixed.getRawBits();
 }
-bool Fixed::operator<= (const Fixed& fixed){
+bool Fixed::operator<= (const Fixed& fixed) const {
     return this->getRawBits() <= fixed.getRawBits();
 }
-bool Fixed::operator== (const Fixed& fixed){
+bool Fixed::operator== (const Fixed& fixed) const {
     return this->getRawBits() == fixed.getRawBits();
 }
-bool Fixed::operator!= (const Fixed& fixed){
+//밖에 const를 붙이는 이유는 왼쪽 연산자또한 const로 받기 위해서 
+bool Fixed::operator!= (const Fixed& fixed) const {
     return this->getRawBits() != fixed.getRawBits();
 }
 
@@ -93,15 +89,28 @@ Fixed& Fixed::operator-- (void){
     return (*this);
 }
 const Fixed Fixed::operator++ (int){
-    return Fixed(this->value + 1);
+    const Fixed tmp(*this);
+
+    this->value++;
+    return tmp;
 }
 const Fixed Fixed::operator-- (int){
-    return Fixed(this->value - 1);
+    const Fixed tmp(*this);
+
+    this->value--;
+    return tmp;
 }
 
-static Fixed& max(Fixed& first, Fixed& second){
-    
+Fixed& Fixed::max(Fixed& first, Fixed& second){
+    return (first > second ? first : second);
 }
-static Fixed& max(const Fixed& first, const Fixed& second);
-static Fixed& min(Fixed& first, Fixed& second);
-static Fixed& min(const Fixed& first, const Fixed& second);
+
+const Fixed& Fixed::max(const Fixed& first, const Fixed& second){
+    return (first > second ? first : second);
+}
+Fixed& Fixed::min(Fixed& first, Fixed& second){
+    return (first < second ? first : second);
+}
+const Fixed& Fixed::min(const Fixed& first, const Fixed& second){
+    return (first < second ? first : second);
+}
