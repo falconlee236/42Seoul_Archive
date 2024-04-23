@@ -3,9 +3,9 @@
 class ClapTrap{
 private:
     std::string _name;
-    int _hit;
-    int _energy;
-    int _attack;
+    unsigned int _hit;
+    unsigned int _energy;
+    unsigned int _attack;
 public:
     //default constructor
     ClapTrap();
