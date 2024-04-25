@@ -1,27 +1,56 @@
 #include "ScavTrap.hpp"
+#include "FragTrap.hpp"
 
 int main(void){
-    {
-        ScavTrap* scav = new ScavTrap("scav");
+    std::cout << "### CLAPTRAP ###\n\b";{
+        std::cout << "\033[34mConstructing\033[0m" << std::endl;
+        ClapTrap a;
+        ClapTrap b("Cody");
 
-        scav->attack("Handsome Jack");
-        scav->takeDamage(6);
-        scav->beRepaired(4);
-        scav->takeDamage(3);
-        scav->guardGate();
-        scav->beRepaired(8);
-        scav->takeDamage(17);
-        delete scav;
+        std::cout << "\033[34mTesting\033[0m" << std::endl;
+        a.attack("some other robot");
+        a.takeDamage(10);
+        a.takeDamage(10);
+        a.beRepaired(5);
+        a.attack("some other other robot");
+        b.beRepaired(3);
+        for (int i = 0; i < 12; i++)
+            b.attack("Cody-clone");
+        b.beRepaired(3);
+        std::cout << "\033[34mDeconstructing\033[0m" << std::endl;
     }
-    {
-        ClapTrap *clap = new ClapTrap("clap");
+    std::cout << "\n\n### SCAVTRAP ###\n\n";{
+        std::cout << "\033[34mConstructing\033[0m" << std::endl;
+        ScavTrap c;
+        ScavTrap d("Savage");
 
-        clap->attack("Handsome Jack");
-        clap->takeDamage(6);
-        clap->beRepaired(4);
-        clap->takeDamage(3);
-        clap->beRepaired(8);
-        clap->takeDamage(17);
-        delete clap;
+        std::cout << "\033[34mTesting\033[0m" << std::endl;
+        c.attack("CloneTrap");
+        c.beRepaired(22);
+        c.takeDamage(21);
+        c.beRepaired(22);
+        c.guardGate();
+        c.guardGate();
+        d.attack("Savage-clone");
+        d.takeDamage(101);
+        d.takeDamage(15);
+        d.attack("ScavTrap-clone");
+        std::cout << "\033[34mDeconstructing\033[0m" << std::endl;
+    }
+    std::cout << "\n\nTESTING FRAGTRAP ###\n\n";{
+        std::cout << "\033[34mConstructing\033[0m" << std::endl;
+        FragTrap e;
+        FragTrap f("Chadd");
+
+        std::cout << "\033[34mTesting\033[0m" << std::endl;
+        e.highFiveGuys();
+        e.attack("some random dude");
+        e.takeDamage(101);
+        e.takeDamage(1);
+        e.attack("some random dude");
+        f.highFiveGuys();
+        // for(int i = 0; i < 101; i++)
+        // 	f.attack("FragTrap-clone");
+        std::cout << "\033[34mDeconstructing\033[0m" << std::endl;
     }
 }

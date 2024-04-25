@@ -44,3 +44,7 @@ FragTrap::~FragTrap(void)
 {
     std::cout << "FragTrap " << this->_name << " destructor called\n";
 }
+
+void FragTrap::highFiveGuys(void){
+    std::cout << "FragTrap " << this->_name << " displays a high fives request\n";
+}
