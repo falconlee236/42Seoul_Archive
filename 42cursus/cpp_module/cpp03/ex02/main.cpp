@@ -5,7 +5,7 @@ int main(void){
     std::cout << "### CLAPTRAP ###\n\b";{
         std::cout << "\033[34mConstructing\033[0m" << std::endl;
         ClapTrap a;
-        ClapTrap b("Cody");
+        ClapTrap b("Clap");
 
         std::cout << "\033[34mTesting\033[0m" << std::endl;
         a.attack("some other robot");
@@ -22,7 +22,7 @@ int main(void){
     std::cout << "\n\n### SCAVTRAP ###\n\n";{
         std::cout << "\033[34mConstructing\033[0m" << std::endl;
         ScavTrap c;
-        ScavTrap d("Savage");
+        ScavTrap d("Scav");
 
         std::cout << "\033[34mTesting\033[0m" << std::endl;
         c.attack("CloneTrap");
@@ -40,7 +40,7 @@ int main(void){
     std::cout << "\n\nTESTING FRAGTRAP ###\n\n";{
         std::cout << "\033[34mConstructing\033[0m" << std::endl;
         FragTrap e;
-        FragTrap f("Chadd");
+        FragTrap f("Frag");
 
         std::cout << "\033[34mTesting\033[0m" << std::endl;
         e.highFiveGuys();
@@ -49,8 +49,6 @@ int main(void){
         e.takeDamage(1);
         e.attack("some random dude");
         f.highFiveGuys();
-        // for(int i = 0; i < 101; i++)
-        // 	f.attack("FragTrap-clone");
         std::cout << "\033[34mDeconstructing\033[0m" << std::endl;
     }
 }
