@@ -37,7 +37,7 @@ int main(void){
         d.attack("ScavTrap-clone");
         std::cout << "\033[34mDeconstructing\033[0m" << std::endl;
     }
-    std::cout << "\n\nTESTING FRAGTRAP ###\n\n";{
+    std::cout << "\n\n FRAGTRAP ###\n\n";{
         std::cout << "\033[34mConstructing\033[0m" << std::endl;
         FragTrap e;
         FragTrap f("Frag");
