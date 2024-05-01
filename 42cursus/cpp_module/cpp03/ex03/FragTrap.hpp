@@ -2,8 +2,7 @@
 #define __FRAGTRAP_HPP__
 #include "ClapTrap.hpp"
 
-class FragTrap : virtual public ClapTrap
-{
+class FragTrap : virtual public ClapTrap{
 public:
     FragTrap(void);
     FragTrap(std::string name);
