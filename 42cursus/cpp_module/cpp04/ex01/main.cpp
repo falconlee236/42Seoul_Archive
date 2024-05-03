@@ -2,13 +2,8 @@
 #include "Dog.hpp"
 #include "Cat.hpp"
 
-void check_leak(){
-	system("leaks ex01");
-}
-
 #define SIZE_GROUP 6
 int main(){
-	atexit(check_leak);
 	Animal* animalGroup[SIZE_GROUP];
     
     std::cout << "------------------CONSTRUCTOR-------------------" << std::endl ;
