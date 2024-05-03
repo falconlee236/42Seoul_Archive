@@ -2,10 +2,12 @@
 
 Cat::Cat(void){
 	this->type = "Cat";
+	this->brain = new Brain();
 	std::cout << "Cat default constructor called\n";
 }
 Cat::Cat(const Cat& obj){
 	this->type = obj.type;
+	this->brain = obj.brain;
 	std::cout << "Cat copy constructor called\n";
 }
 Cat& Cat::operator= (const Cat& obj){
@@ -16,6 +18,7 @@ Cat& Cat::operator= (const Cat& obj){
 	return *this;
 }
 Cat::~Cat(void){
+	delete this->brain;
 	std::cout << "Cat destructor called\n";
 }
 void Cat::makeSound(void) const{

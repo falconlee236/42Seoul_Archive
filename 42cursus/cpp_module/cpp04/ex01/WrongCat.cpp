@@ -1,16 +1,16 @@
 #include "WrongCat.hpp"
 
 WrongCat::WrongCat(void){
-	this->type = "WrongCat";
+	WrongAnimal::type = "WrongCat";
 	std::cout << "WrongCat default constructor called\n";
 }
 WrongCat::WrongCat(const WrongCat& obj){
-	this->type = obj.type;
+	WrongAnimal::type = obj.type;
 	std::cout << "WrongCat copy constructor called\n";
 }
 WrongCat& WrongCat::operator= (const WrongCat& obj){
 	if (this != &obj){
-		this->type = obj.type;
+		WrongAnimal::type = obj.type;
 	}
 	std::cout << "WrongCat operator = called\n";
 	return *this;
