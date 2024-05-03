@@ -2,7 +2,7 @@
 
 Brain::Brain(void){
 	for (int i = 0; i < 100; i++){
-		this->ideas[i] = "";
+		this->ideas[i] = 'A' + (i % 26);
 	}
 	std::cout << "Brain default constructor called\n";
 }
@@ -23,4 +23,15 @@ Brain& Brain::operator= (const Brain& obj){
 }
 Brain::~Brain(void){
 	std::cout << "Brain destructor called\n";
+}
+
+const std::string* Brain::getIdeas(void) const{
+    return ideas;
+}
+
+void Brain::setIdeas(std::string idea){
+    if (idea.empty())
+        idea = "zzzzzzz...zzzzzzz";
+    for (int i = 0; i < 100; i++)
+        ideas[i] = idea;
 }

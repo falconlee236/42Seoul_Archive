@@ -10,6 +10,8 @@ public:
 	Brain(const Brain& obj);
 	Brain& operator= (const Brain& obj);
 	~Brain(void);
+	const std::string* getIdeas(void) const;
+	void setIdeas(std::string idea);
 };
 
 #endif

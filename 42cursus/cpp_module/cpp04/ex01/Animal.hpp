@@ -13,6 +13,7 @@ public:
 	virtual ~Animal(void);
 	virtual void makeSound(void) const;
 	std::string getType(void) const;
+	void printAddress( void ) const;
 };
 
 #endif

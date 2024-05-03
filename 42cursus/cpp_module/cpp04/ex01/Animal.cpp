@@ -24,3 +24,7 @@ void Animal::makeSound(void) const{
 std::string Animal::getType(void) const{
 	return this->type;
 }
+
+void Animal::printAddress( void ) const{
+	std::cout << "Address: " << this << "\n";
+}
