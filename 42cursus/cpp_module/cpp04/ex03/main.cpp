@@ -3,12 +3,7 @@
 #include "Ice.hpp"
 #include "Cure.hpp"
 
-void leak_check(void){
-    system("leaks ex03");
-}
-
 int main(){
-    atexit(&leak_check);
     IMateriaSource *src = new MateriaSource();
     src->learnMateria(new Ice());
     src->learnMateria(new Cure());
