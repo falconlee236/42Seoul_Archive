@@ -5,7 +5,7 @@
 
 class AMateria{
 protected:
-    const std::string _type;
+    std::string _type;
 public:
     AMateria(void);
     AMateria(const AMateria& obj);
