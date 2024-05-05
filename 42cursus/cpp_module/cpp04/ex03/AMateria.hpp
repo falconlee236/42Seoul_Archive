@@ -10,7 +10,7 @@ public:
     AMateria(void);
     AMateria(const AMateria& obj);
     AMateria& operator= (const AMateria& obj);
-    ~AMateria(void);
+    virtual ~AMateria(void);
 
     AMateria(std::string const & type);
 
