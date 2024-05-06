@@ -2,7 +2,8 @@ CPP = c++
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98
 
 NAME = ex03
-SRCS = main.cpp Animal.cpp Cat.cpp Dog.cpp WrongAnimal.cpp WrongCat.cpp
+SRCS = main.cpp Bureaucrat.cpp AForm.cpp \
+		ShrubberyCreationForm.cpp RobotomyRequestForm.cpp PresidentialPardonForm.cpp Intern.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 all: $(NAME)
