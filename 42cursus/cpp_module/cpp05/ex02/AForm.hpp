@@ -2,6 +2,7 @@
 #define __AFORM_HPP__
 
 #include "Bureaucrat.hpp"
+#include <exception>
 
 class Bureaucrat;
 
@@ -16,7 +17,7 @@ public:
     AForm(std::string name, int signGrade, int execGrade);
     AForm(const AForm& obj);
     AForm& operator= (const AForm& obj);
-    ~AForm(void);
+    virtual ~AForm(void);
 
     const std::string& getName(void) const;
     const bool& getIsSign(void) const;

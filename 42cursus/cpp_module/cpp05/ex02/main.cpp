@@ -1,37 +1,42 @@
 #include "Bureaucrat.hpp"
-#include "Form.hpp"
+#include "ShrubberyCreationForm.hpp"
+#include "RobotomyRequestForm.hpp"
+#include "PresidentialPardonForm.hpp"
 
-int main()
-{
-	Bureaucrat burro("burro", 42);
-	std::cout << burro;
-	try{
-		Form formaccio("formaccio", 1000, 1);
-	}
-	catch (std::exception &e){
-		std::cout << "Error: " << e.what() << std::endl;
-	}
-	try{
-		Form formaccio("formaccio", 42, 0);
-	}
-	catch (std::exception &e){
-		std::cout << "Error: " << e.what() << std::endl;
-	}
+# define BUREAUCRAT "\033[1;30m"
+# define SHRUBBERY "\033[1;32m"
+# define ROBOT "\033[1;36m"
+# define PARDON "\033[1;35m"
 
-	try{
-		Form formino("formino", 42, 42);
-		Form formone("formone", 1, 1);
+int main() {
+	Bureaucrat mu = Bureaucrat("mu", 2);
+	Bureaucrat samsak = Bureaucrat("samsak", 139);
+	Bureaucrat yatong = Bureaucrat("yatong", 148);
+	AForm* moon = new ShrubberyCreationForm("Moon");
 
-		std::cout << std::endl
-				  << formino << formone;
+	std::cout << BUREAUCRAT << mu << std::endl;
+	std::cout << BUREAUCRAT << samsak << std::endl;
+	std::cout << BUREAUCRAT << yatong << std::endl;
+	std::cout << SHRUBBERY << *moon << std::endl;
+	mu.signForm(*moon);
+	std::cout << SHRUBBERY << *moon << std::endl;
+	mu.executeForm(*moon);
+	samsak.signForm(*moon);
+	std::cout << SHRUBBERY << *moon << std::endl;
+	samsak.executeForm(*moon);
+	yatong.signForm(*moon);
+	std::cout << SHRUBBERY << *moon << std::endl;
+	yatong.executeForm(*moon);
+	delete moon;
 
-		burro.signForm(formino);
-		std::cout << formino;
-		burro.signForm(formino);
-		std::cout << std::endl;
-		burro.signForm(formone);
-	}
-	catch (std::exception &e){
-		std::cout << "Error: " << e.what() << std::endl;
-	}
+	AForm* robot = new RobotomyRequestForm("transfomer");
+	std::cout << ROBOT << *robot << std::endl;
+	mu.signForm(*robot);
+	mu.executeForm(*robot);
+
+	AForm* where42 = new PresidentialPardonForm("where42");
+	std::cout << PARDON << *where42 << std::endl;
+	mu.signForm(*where42);
+	mu.executeForm(*where42);
+	delete where42;
 }

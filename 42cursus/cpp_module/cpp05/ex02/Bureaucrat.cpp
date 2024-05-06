@@ -44,9 +44,19 @@ void Bureaucrat::decrement(void){
 void Bureaucrat::signForm(AForm &form){
 	try{
 		form.beSigned(*this);
-		std::cout << this->getName() << " signed " << form.getName();
+		std::cout << this->getName() << " signed " << form.getName() << "\n";
 	} catch (std::exception& e){
 		std::cout << this->getName() << " couldn\'t sign " << 
+					form.getName() << " because " << e.what() << ".\n";
+	}
+}
+
+void Bureaucrat::executeForm(AForm const &form){
+	try{
+		(*const_cast<AForm *>(&form)).execute(*this);
+		std::cout << this->getName() << " execute " << form.getName() << "\n";
+	} catch (std::exception& e){
+		std::cout << this->getName() << " couldn\'t execute " << 
 					form.getName() << " because " << e.what() << ".\n";
 	}
 }

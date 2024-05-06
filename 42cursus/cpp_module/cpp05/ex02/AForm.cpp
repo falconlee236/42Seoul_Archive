@@ -5,6 +5,7 @@ AForm::AForm(void) : _name("default"), _signGrade(75), _execGrade(75) {
 }
 
 AForm::AForm(std::string name, int signGrade, int execGrade) : _name(name), _signGrade(signGrade), _execGrade(execGrade){
+    this->_isSign = false;
     if (this->_signGrade < 1 || this->_execGrade < 1)
         throw GradeTooHighException();
     if (this->_signGrade > 150 || this->_signGrade > 150)
@@ -48,6 +49,14 @@ const char *AForm::GradeTooHighException::what(void) const throw(){
 
 const char *AForm::GradeTooLowException::what(void) const throw(){
     return "Grade Too Low...";
+}
+
+const char *AForm::NotSignedException::what(void) const throw(){
+    return "Form is not signed...";
+}
+
+const char *AForm::NotExecuteException::what(void) const throw(){
+    return "Cannot Execute...";
 }
 
 std::ostream &operator<<(std::ostream &o, const AForm &obj){

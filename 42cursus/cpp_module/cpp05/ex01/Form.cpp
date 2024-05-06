@@ -5,6 +5,7 @@ Form::Form(void) : _name("default"), _signGrade(75), _execGrade(75) {
 }
 
 Form::Form(std::string name, int signGrade, int execGrade) : _name(name), _signGrade(signGrade), _execGrade(execGrade){
+    this->_isSign = false;
     if (this->_signGrade < 1 || this->_execGrade < 1)
         throw GradeTooHighException();
     if (this->_signGrade > 150 || this->_signGrade > 150)
