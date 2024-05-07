@@ -8,7 +8,7 @@ public:
     ScalarConverter(void);
     ScalarConverter(const ScalarConverter& obj);
     ScalarConverter& operator= (const ScalarConverter &obj);
-    ~ScalarConverter();
-    static void convert(std::string str);
+    ~ScalarConverter(void);
+    static void convert(std::string &str);
 };
 #endif
