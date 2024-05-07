@@ -1,5 +1,4 @@
 #include "ScalarConverter.hpp"
-#include <cstdlib>
 
 ScalarConverter::ScalarConverter(void){}
 ScalarConverter::ScalarConverter(const ScalarConverter &obj){
@@ -11,7 +10,7 @@ ScalarConverter& ScalarConverter::operator = (const ScalarConverter &obj){
 }
 ScalarConverter::~ScalarConverter(void){}
 
-void ScalarConverter::convert(std::string &str){
+void ScalarConverter::convert(const std::string &str){
     double res;
     char* end = NULL;
     try{
@@ -42,5 +41,25 @@ void ScalarConverter::convert(std::string &str){
     else
         std::cout << static_cast<int>(res) << std::endl;
     
+    // inf case
+    if (std::isnan(res) || std::isinf(res)){
+        std::cout << "float: " << std::showpos << static_cast<float>(res) << "f\n"
+                  << "double: " << static_cast<double>(res) << std::endl;
+        return;
+    }
+    
+
     // float convert
+    std::cout << "float: ";
+    if (static_cast<float>(res) == static_cast<int64_t>(static_cast<float>(res)))
+        std::cout << static_cast<float>(res) << ".0f\n";
+    else
+        std::cout << std::setprecision(std::numeric_limits<float>::digits10) << static_cast<float>(res) << "f\n";
+
+    // double convert
+    std::cout << "double: ";
+    if (static_cast<double>(res) == static_cast<int64_t>(static_cast<double>(res)))
+        std::cout << static_cast<double>(res) << ".0\n";
+    else
+        std::cout << std::setprecision(std::numeric_limits<double>::digits10) << static_cast<double>(res) << "\n";
 }
