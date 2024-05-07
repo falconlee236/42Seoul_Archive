@@ -6,8 +6,9 @@
 #include <cstdlib>
 
 class ScalarConverter{
-public:
+private:
     ScalarConverter(void);
+public:
     ScalarConverter(const ScalarConverter& obj);
     ScalarConverter& operator= (const ScalarConverter &obj);
     ~ScalarConverter(void);
