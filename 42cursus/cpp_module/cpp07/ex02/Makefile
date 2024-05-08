@@ -1,8 +1,8 @@
 CPP = c++
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98
 
-NAME = convert
-SRCS = main.cpp ScalarConverter.cpp
+NAME = ex02
+SRCS = main.cpp OutOfRange
 OBJS = $(SRCS:.cpp=.o)
 
 all: $(NAME)
