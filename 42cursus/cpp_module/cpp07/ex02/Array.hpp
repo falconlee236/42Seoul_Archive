@@ -10,11 +10,14 @@ private:
     unsigned int num;
 public:
     Array(void){
-        this->arr = new T;
+        this->arr = NULL;
         this->num = 0;
     }
     Array(unsigned int n){
-        this->arr = new T[n];
+        if (n == 0)
+            this->arr = NULL;
+        else
+            this->arr = new T[n];
         this->num = n;
     }
     Array(const Array& obj){
