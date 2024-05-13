@@ -21,30 +21,39 @@ public:
         this->num = n;
     }
     Array(const Array& obj){
-        this->arr = new T[obj.num];
         this->num = obj.num;
-        for(unsigned int i = 0; i < this->num; i++)
+        if (obj.num)
+            this->arr = new T[obj.num];
+        else
+            this->arr = obj.arr;
+        for (unsigned int i = 0; i < this->num; i++)
             this->arr[i] = obj.arr[i];
     }
     Array &operator =(const Array& obj){
-        if (this->arr)
+        if (this->arr){
             delete[] this->arr;
-        this->arr = new T(obj.num);
+            this->arr = NULL;
+        }
         this->num = obj.num;
+        if (this->num)
+            this->arr = new T(obj.num);
         for (unsigned int i = 0; i < this->num; i++)
             this->arr[i] = obj.arr[i];
     }
     ~Array(void){
-        if (this->arr)
+        if (this->arr){
             delete[] this->arr;
+            this->arr = NULL;
+            this->num = 0;
+        }
     }
     T &operator[](unsigned int idx){
-        if (idx < 0 || idx > this->num)
+        if (idx < 0 || idx >= this->num)
             throw OutOfRange();
         return this->arr[idx];
     }
     const T &operator[](unsigned int idx) const{
-        if (idx < 0 || idx > this->num)
+        if (idx < 0 || idx >= this->num)
             throw OutOfRange();
         return this->arr[idx];
     }

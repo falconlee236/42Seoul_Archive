@@ -49,5 +49,19 @@ int main(int, char**)
         numbers[i] = rand();
     }
     delete [] mirror;//
+    Array<int> tmp = numbers;
+    for (int i = 0; i < 5; i++)
+    {
+        std::cout << "numbers[i] = " << numbers[i] << std::endl;
+        std::cout << "tmp[i] = " << tmp[i] << std::endl;
+    }
+    std::cout << "=======================================================\n\n";
+    for (int i = 0; i < 5; i++)
+        tmp[i] = i;
+    for (int i = 0; i < 5; i++)
+    {
+        std::cout << "numbers[i] = " << numbers[i] << std::endl;
+        std::cout << "tmmmmmp[i] = " << tmp[i] << std::endl;
+    }
     return 0;
 }
