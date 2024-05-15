@@ -23,6 +23,7 @@ void ScalarConverter::convert(const std::string &str){
         ) throw std::bad_cast(); // 위 경우가 아니면 진짜 0이 아닌거임
     } catch (...){
         std::cout << "convert failed" << std::endl;
+		return;
     }
 
     // char convert
