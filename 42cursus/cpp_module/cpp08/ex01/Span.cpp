@@ -1,7 +1,7 @@
 #include "Span.hpp"
 
 Span::Span(void) : _n(0), _v(0){}
-Span::Span(unsigned int n) : _n(n), _v(n) {}
+Span::Span(unsigned int n) : _n(n), _v(0) {}
 Span::Span(const Span &obj) : _n(obj._n), _v(obj._v) {}
 Span &Span::operator = (const Span &obj){
     if (this != &obj){
@@ -17,26 +17,24 @@ void Span::addNumber(int num){
         throw ArrayFullException();
     _v.push_back(num);
 }
-unsigned int Span::shortestSpan() const{
-    if (_v.size() <= 1)
+
+unsigned int Span::shortestSpan(void){
+    if (_v.size() <= 2)
         throw SpanNotFoundException();
     
-    size_t mid = _v.size() / 2;
-    std::sort(_v.begin(), _v.end());
-    if (mid & 1){
-        return _v[mid] - _v[mid - 1] > _v[mid + 1] - _v[mid] ? _v[mid + 1] - _v[mid] : _v[mid] - _v[mid - 1];
-    } else {
-        return _v[mid] - _v[mid - 1];
+    int res = 2147483647;
+    std::vector<int> tmp(_v.begin(), _v.end());
+    std::sort(tmp.begin(), tmp.end());
+    for (unsigned int i = 0; i < _v.size() - 1; i++){
+        res = std::min(res, tmp[i + 1] - tmp[i]);
     }
+    return res;
 }
-unsigned int Span::longestSpan() const{
-    if (_v.size() <= 1)
+unsigned int Span::longestSpan(void){
+    if (_v.size() <= 2)
         throw SpanNotFoundException();
     
-    unsigned int res = 0;
-    int max_element = *(std::max_element(_v.begin(), _v.end()));
-    int min_element = *(std::max_element(_v.begin(), _v.end()));
-    return max_element - min_element;
+    return *std::max_element(_v.begin(), _v.end()) - *std::min_element(_v.begin(), _v.end());
 }
 
 const char *Span::ArrayFullException::what(void) const throw(){

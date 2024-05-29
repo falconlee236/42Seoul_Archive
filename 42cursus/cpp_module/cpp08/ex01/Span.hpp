@@ -17,8 +17,17 @@ public:
     ~Span(void);
 
     void addNumber(int num);
-    unsigned int shortestSpan() const;
-    unsigned int longestSpan() const;
+
+    template <typename T>
+    void addNumbers(T &container){
+        if (this->_v.size() + container.size() > this->_n)
+            throw ArrayFullException();
+        for (typename T::iterator it = container.begin(); it != container.end(); it++)
+            this->_v.push_back(*it);
+    }
+
+    unsigned int shortestSpan(void);
+    unsigned int longestSpan(void);
 
     class ArrayFullException : public std::exception {
         public:
