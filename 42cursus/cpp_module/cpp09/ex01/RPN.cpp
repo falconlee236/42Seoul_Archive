@@ -47,6 +47,8 @@ bool cal(std::string str){
         else 
             return false;
     }
+    if (stk.size() != 1)
+        return false;
     std::cout << stk.top() << "\n";
     return true;
 }
