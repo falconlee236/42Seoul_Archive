@@ -11,10 +11,17 @@ typedef struct s_date{
     int year;
     int month;
     int day;
+
+    bool operator<(const struct s_date &other) const {
+        if (year != other.year)
+            return year < other.year;
+        if (month != other.month)
+            return month < other.month;
+        return day < other.day;
+    }
 } t_date;
 
 std::ostream &operator<<(std::ostream &os, const t_date &date);
-bool operator<(const t_date &lhs, const t_date &rhs);
 
 class BitcoinExchange{
 private:

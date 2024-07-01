@@ -76,7 +76,8 @@ bool BitcoinExchange::is_valid_target_file(void){
             continue;
         }
         std::stringstream ss(line);
-        std::string token;
+        std::string token, date;
+        t_date key;
         int idx = 0;
         while (std::getline(ss, token, '|')){
             if (idx == 0){
@@ -84,9 +85,9 @@ bool BitcoinExchange::is_valid_target_file(void){
                     std::cerr << "Error: bad input => " << "\"" << token << "\"" << std::endl;
                     break;
                 }
-                t_date key = get_date(token.substr(0, token.length() - 1));
+                key = get_date(token.substr(0, token.length() - 1));
                 idx++;
-                std::cout << key << " ";
+                date = token.substr(0, token.length() - 1);
             }
             else{
                 if (token[0] != ' '){
@@ -99,7 +100,10 @@ bool BitcoinExchange::is_valid_target_file(void){
                 }
                 float f;
                 std::istringstream(token.substr(1)) >> f;
-                std::cout << f << "\n";
+                std::map<t_date, float>::iterator it = mp.upper_bound(key);
+                if (it != mp.begin())
+                    it--;
+                std::cout << date << " => " << f << " = " << f * it->second << "\n";
             }
         }
         line_cnt++;
@@ -190,14 +194,8 @@ bool BitcoinExchange::isValidDate(const std::string &date){
 }
 
 std::ostream &operator<<(std::ostream &os, const t_date &date){
-    os << date.year << "-" << date.month << "-" << date.day;
+    os << date.year << "-";
+    os << (date.month < 10 ? "0" : "") << date.month << "-";
+    os << (date.day < 10 ? "0" : "") << date.day;
     return os;
-}
-
-bool operator<(const t_date &lhs, const t_date &rhs){
-    if (lhs.year != rhs.year)
-        return lhs.year < rhs.year;
-    if (lhs.month != rhs.month)
-        return lhs.month < rhs.month;
-    return lhs.day < rhs.day;
 }
