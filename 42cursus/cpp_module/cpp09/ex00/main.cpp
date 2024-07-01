@@ -15,4 +15,7 @@ int main(int ac, char **av){
     
     if (!handler.get_stock_data())
         print_error("get stock data failed");
+
+    if (!handler.is_valid_target_file())
+        print_error("Cannot open target file");
 }
