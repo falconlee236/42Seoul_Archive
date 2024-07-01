@@ -1,8 +1,8 @@
 CPP = c++
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98
 
-NAME = ex00
-SRCS = main.cpp
+NAME = PmergeMe
+SRCS = main.cpp PmergeMe.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 all: $(NAME)
