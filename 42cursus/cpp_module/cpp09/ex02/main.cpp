@@ -20,5 +20,11 @@ int main(int ac, char **av){
         std::cout << arr[i] << " ";
     }
     std::cout << "\n";
+    arr = ford_johnson_vector(arr);
+    std::cout << "After: ";
+    for(size_t i = 0 ; i < arr.size(); i++){
+        std::cout << arr[i] << " ";
+    }
+    std::cout << "\n";
     return 0;
 }
