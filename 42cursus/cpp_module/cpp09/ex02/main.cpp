@@ -15,16 +15,31 @@ int main(int ac, char **av){
         arr.push_back(num);
     }
 
+    std::vector<int> tmp_vec(arr.begin(), arr.end());
+    std::deque<int> tmp_deq(arr.begin(), arr.end());
+
     std::cout << "Before: ";
     for(size_t i = 0 ; i < arr.size(); i++){
         std::cout << arr[i] << " ";
     }
     std::cout << "\n";
-    arr = ford_johnson_vector(arr);
+    sorting_use_vector(arr);
     std::cout << "After: ";
     for(size_t i = 0 ; i < arr.size(); i++){
         std::cout << arr[i] << " ";
     }
     std::cout << "\n";
+
+    clock_t start, end;
+
+    start = clock();
+    sorting_use_vector(tmp_vec);
+    end = clock();
+    print_time(start, end, tmp_vec.size(), "vector");
+
+    start = clock();
+    sorting_use_deque(tmp_deq);
+    end = clock();
+    print_time(start, end, tmp_deq.size(), "deque");
     return 0;
 }
